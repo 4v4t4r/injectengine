@@ -99,7 +99,9 @@
 
 <footer class="footer">
 	<div class="container">
-		<p class="text-muted pull-right">InjectEngine v1 // Made with &hearts; by <a href="//james.droste.im">James Droste</a></p>
+		<p class="text-muted pull-right">
+			InjectEngine <abbr title="<?php echo $version_long; ?>"><?php echo $version; ?></abbr> // Made with &hearts; by <a href="//james.droste.im">James Droste</a>
+		</p>
 	</div>
 </footer>
 
