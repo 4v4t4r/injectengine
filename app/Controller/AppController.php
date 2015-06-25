@@ -67,16 +67,16 @@ class AppController extends Controller {
 		$this->backend_access = $this->getPermission('backend_access');
 
 		// Git version (because it looks cool)
-		if ( Cache::read('version') == false ) {
+		if ( Cache::read('version', 'short') == false ) {
 			exec('git describe --always', $mini_hash);
 			exec('git log -1', $line);
 
-			Cache::write('version', 'v1-'.trim($mini_hash[0]));
-			Cache::write('version_long', str_replace('commit ','', $line[0]));
+			Cache::write('version', 'v1-'.trim($mini_hash[0]), 'short');
+			Cache::write('version_long', str_replace('commit ','', $line[0]), 'short');
 		}
 		
-		$this->set('version', Cache::read('version'));
-		$this->set('version_long', Cache::read('version_long'));
+		$this->set('version', Cache::read('version', 'short'));
+		$this->set('version_long', Cache::read('version_long', 'short'));
 
 		// Set template information
 		$this->set('userinfo', $this->userinfo);
