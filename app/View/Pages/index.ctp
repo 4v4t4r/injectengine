@@ -2,7 +2,7 @@
 
 <p class="text-center"><img src="http://img.memecdn.com/true-camping-story_c_897237.jpg" /></p>
 
-<?php if ( $groupinfo['backend_access'] ): ?>
+<?php if ( $backend_access ): ?>
 <p>&nbsp;</p>
 <ul class="list-group">
 	<li class="list-group-item disabled">ToDo List</li>
