@@ -15,20 +15,17 @@ class Inject extends AppModel {
 			LEFT JOIN 
 				completed_injects AS CompletedInject 
 			ON 
-				CompletedInject.inject_id = Inject.id 
+				CompletedInject.inject_id = Inject.id AND CompletedInject.team_id = ?
 			LEFT JOIN 
 				users AS User
 			ON 
 				CompletedInject.user_id = User.id 
 			WHERE 
-				CompletedInject.team_id = ? OR 
+				Inject.active = ? AND 
+				Inject.group_id = ? AND 
 				(
-					Inject.active = ? AND 
-					Inject.group_id = ? AND 
-					(
-						(Inject.time_start >= ? OR Inject.time_start = ?) AND 
-						(Inject.time_end <= ? OR Inject.time_end = ?)
-					)
+					(Inject.time_start <= ? OR Inject.time_start = ?) AND 
+					(Inject.time_end >= ? OR Inject.time_end = ?)
 				)
 			ORDER BY
 				Inject.order ASC';

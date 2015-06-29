@@ -27,6 +27,13 @@
 	Router::connect('/', array('controller' => 'pages', 'action' => 'index'));
 	Router::connect('/scoreboard', array('controller' => 'pages', 'action' => 'scoreboard'));
 
+	// Backend Index
+	Router::connect('/backend', array('controller' => 'backend', 'action' => 'index'));
+
+	// Backend Logs
+	Router::connect('/backend/logs', array('controller' => 'backend', 'action' => 'logs'));
+	Router::connect('/backend/logs/*', array('controller' => 'backend', 'action' => 'logs'));
+
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.

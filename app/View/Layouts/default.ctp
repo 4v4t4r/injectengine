@@ -22,6 +22,12 @@
 	?>
 </head>
 <body>
+<?php if ( $emulating ): ?>
+<div class="alert alert-danger" style="margin-bottom: 0px;">
+	You are currently emulating a user's account! <?php echo $this->Html->link('EXIT', '/user/emulate_clear', array('class' => 'btn btn-sm btn-info pull-right')); ?>
+</div>
+<?php endif; ?>
+
 <nav class="navbar navbar-default navbar-static-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -36,25 +42,43 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li class="<?php echo isset($at_home) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/'); ?>">Home</a></li>
+
+				<?php if ( !empty($userinfo) ): ?>
 				<li class="<?php echo isset($at_injects) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/injects'); ?>">Injects</a></li>
+				<?php endif; ?>
+
 				<li class="<?php echo isset($at_scoreboard) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/scoreboard'); ?>">Scoreboard</a></li>
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">
 				<?php if ( !empty($userinfo) ): ?>
 
+				<?php if ( $teampanel_access ): ?>
 				<li class="<?php echo isset($at_teampanel) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/team'); ?>">Team Panel</a></li>
+				<?php endif; ?>
+
+				<?php if ( $dashboard_access ): ?>
+				<li class="dropdown<?php echo isset($at_dashboard) ? ' active' : ''; ?>">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+						Dashboards <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li class=""><a href="<?php echo $this->Html->url('/dashboard/overview'); ?>">Overview</a></li>
+						<li class=""><a href="<?php echo $this->Html->url('/dashboard/personal'); ?>">Personalized</a></li>
+					</ul>
+				</li>
+				<?php endif; ?>
 
 				<?php if ( $backend_access ): ?>
-				<li class="dropdown">
+				<li class="dropdown<?php echo isset($at_backendpanel) ? ' active' : ''; ?>">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
 						Backend Panel <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li class=""><a href="<?php echo $this->Html->url('/backend'); ?>">Dashboard</a></li>
-						<li class=""><a href="<?php echo $this->Html->url('/backend'); ?>">User Manager</a></li>
-						<li class=""><a href="<?php echo $this->Html->url('/backend'); ?>">Inject Manager</a></li>
-						<li class=""><a href="<?php echo $this->Html->url('/backend'); ?>">Service Manager</a></li>
+						<li class=""><a href="<?php echo $this->Html->url('/backend/user'); ?>">User Manager</a></li>
+						<li class=""><a href="<?php echo $this->Html->url('/backend/injects'); ?>">Inject Manager</a></li>
+						<li class=""><a href="<?php echo $this->Html->url('/backend/service'); ?>">Service Manager</a></li>
+						<li class=""><a href="<?php echo $this->Html->url('/backend/logs'); ?>">Log Manager</a></li>
 					</ul>
 				</li>
 				<?php endif; ?>

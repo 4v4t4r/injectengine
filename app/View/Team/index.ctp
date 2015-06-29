@@ -13,9 +13,8 @@
 	<div class="panel-heading">Team Membership</div>
 
 	<ul class="list-group">
-		<li class="list-group-item">admin</li>
-		<li class="list-group-item">admin</li>
-		<li class="list-group-item">admin</li>
-		<li class="list-group-item">admin</li>
+		<?php foreach ( $members AS $member ): ?>
+		<li class="list-group-item"><?php echo $member['User']['username']; ?></li>
+		<?php endforeach; ?>
 	</ul>
 </div>

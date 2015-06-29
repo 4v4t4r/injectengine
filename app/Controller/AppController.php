@@ -31,7 +31,7 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-	public $uses = array('Team', 'User');
+	public $uses = array('Team', 'User', 'Log');
 
 	// User Information
 	protected $userinfo  = array();
@@ -43,6 +43,8 @@ class AppController extends Controller {
 
 	// Permissions
 	protected $backend_access = false;
+	protected $dashboard_access = false;
+	protected $teampanel_access = false;
 
 	// Config
 	const REFRESH_INTERVAL = (60*5); // 5 minutes
@@ -63,8 +65,10 @@ class AppController extends Controller {
 		}
 
 		// Set important instance variables
-		$this->logged_in      = !empty($this->userinfo);
-		$this->backend_access = $this->getPermission('backend_access');
+		$this->logged_in        = !empty($this->userinfo);
+		$this->backend_access   = $this->getPermission('backend_access');
+		$this->dashboard_access = $this->getPermission('dashboard_access');
+		$this->teampanel_access = $this->getPermission('teampanel_access');
 
 		// Git version (because it looks cool)
 		if ( Cache::read('version', 'short') == false ) {
@@ -83,9 +87,43 @@ class AppController extends Controller {
 		$this->set('teaminfo', $this->teaminfo);
 		$this->set('groupinfo', $this->groupinfo);
 		$this->set('backend_access', $this->backend_access);
+		$this->set('dashboard_access', $this->dashboard_access);
+		$this->set('teampanel_access', $this->teampanel_access);
+		$this->set('emulating', $this->Session->read('User.emulating'));
+
+		// If we're doing a backend request, require backend access
+		if ( isset($this->request->params['backend']) && $this->request->params['backend'] ) {
+			$this->requireBackend();
+			$this->set('at_backendpanel', true);
+		}
+	}
+
+	public function afterFilter() {
+		parent::afterFilter();
+
+		if ( !$this->backend_access ) {
+			// Clean the HTML
+			$buffer = $this->response->body();
+
+			$search = array(
+				'/\>[^\S ]+/s',  // strip whitespaces after tags, except space
+				'/[^\S ]+\</s',  // strip whitespaces before tags, except space
+				'/(\s)+/s'       // shorten multiple whitespace sequences
+			);
+
+			$replace = array(
+				'>',
+				'<',
+				'\\1'
+			);
+
+			$this->response->body(preg_replace($search, $replace, $buffer));
+		}
 	}
 
 	protected function requireAuthenticated($redirect_to='/user/login') {
+		$this->Session->write('auth.from', $this->request->here);
+
 		if ( !$this->logged_in ) {
 			$this->redirect($redirect_to);
 		}
@@ -99,12 +137,36 @@ class AppController extends Controller {
 		}
 	}
 
+	protected function requireDashboard($message='You are unauthorized to access this resource.') {
+		$this->requireAuthenticated();
+
+		if ( !$this->dashboard_access ) {
+			throw new ForbiddenException($message);
+		}
+	}
+
+	protected function requireTeamPanel($message='You are unauthorized to access this resource.') {
+		$this->requireAuthenticated();
+
+		if ( !$this->teampanel_access ) {
+			throw new ForbiddenException($message);
+		}
+	}
+
 	protected function populateInfo($userid) {
 		// Fetch user info
 		$userinfo = $this->User->findById($userid);
 
 		if ( empty($userinfo) ) {
 			throw new InternalErrorException('Unknown UserID.');
+		}
+
+		// Save specific info from the current session (if exists)
+		$emulating = $this->Session->read('User.emulating');
+		$emulating_from = -1;
+
+		if ( $emulating ) {
+			$emulating_from = $this->Session->read('User.emulating_from');
 		}
 
 		// Destroy the current session (if any)
@@ -124,6 +186,10 @@ class AppController extends Controller {
 		// Generate refresh interval (5 minutes)
 		$userinfo['User']['refresh_info'] = time() + self::REFRESH_INTERVAL;
 
+		// Add the emulating information
+		$userinfo['User']['emulating'] = $emulating;
+		$userinfo['User']['emulating_from'] = $emulating_from;
+
 		// Fetch the team/group info
 		$teaminfo = $this->Team->findById($userinfo['User']['team_id']);
 
@@ -142,5 +208,39 @@ class AppController extends Controller {
 
 	protected function getPermission($name) {
 		return isset($this->groupinfo[$name]) ? $this->groupinfo[$name] : false;
+	}
+
+	// Helper function for funky cases
+	protected function barf($ajax=false, $message='Stop trying to hack the InjectEngine!') {
+		$this->logMessage('BARF', 'Barf triggered by user on '.$this->request->params['controller'].'@'.$this->request->params['action']);
+
+		if ( $ajax ) {
+			return $this->ajaxResponse($message, 400);
+		}
+
+		throw new BadRequestException($message);
+	}
+
+	protected function ajaxResponse($data, $status=200) {
+		$this->layout = 'ajax';
+		
+		return new CakeResponse(array(
+			'body' => (is_array($data) ? json_encode($data) : $data),
+			'status' => $status
+		));
+	}
+
+	protected function logMessage($type, $message, $ip=-1, $user_id=-1) {
+		if ( $ip === -1 ) $ip = $_SERVER['REMOTE_ADDR'];
+		if ( $user_id === -1 ) $user_id = $this->userinfo['id'];
+
+		$this->Log->create();
+		$this->Log->save(array(
+			'type' => strtoupper($type),
+			'text' => $message,
+			'ip_address' => $ip,
+			'user_id' => $user_id,
+			'time' => time(),
+		));
 	}
 }

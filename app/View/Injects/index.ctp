@@ -67,20 +67,34 @@ echo $this->Html->script('injectengine');
 							<td class="text-right text-nowrap">
 								<?php if ( $completed_inject ): ?>
 								
-								<button class="btn btn-xs btn-success">COMPLETED</button>
+								<p><button class="btn btn-xs btn-success">COMPLETED</button></p>
 
 								<?php else: ?>
 
 								<?php if ( $inject['Inject']['hints_enabled'] ): ?>
-								<button 
-									class="btn btn-xs btn-info" 
-									data-toggle="modal" 
-									data-target="#hintModal" 
-									data-inject-id="<?php echo $inject['Inject']['id']; ?>"
-								>
-									HINTS AVAILABLE
-								</button>
+								<p>
+									<button 
+										class="btn btn-xs btn-info" 
+										data-toggle="modal" 
+										data-target="#hintModal" 
+										data-inject-id="<?php echo $inject['Inject']['id']; ?>"
+									>
+										HINTS AVAILABLE
+									</button>
+								</p>
 								<?php endif; ?>
+
+								<p>
+									<button 
+										class="btn btn-xs btn-warning" 
+										data-toggle="modal" 
+										data-target="#helpModal" 
+										data-inject-id="<?php echo $inject['Inject']['id']; ?>"
+										data-inject-name="<?php echo $inject['Inject']['title']; ?>"
+									>
+										REQUEST HELP
+									</button>
+								</p>
 
 								<?php endif; ?>
 							</td>
@@ -127,8 +141,13 @@ echo $this->Html->script('injectengine');
 			</div>
 
 			<div class="panel-footer">
+				<?php if ( $inject['Inject']['time_start'] > 0 ): ?>
 				<p><strong>Inject Start</strong>: <?php echo date('n/j \a\t g:iA', $inject['Inject']['time_end']); ?></p>
+				<?php endif; ?>
+
+				<?php if ( $inject['Inject']['time_end'] > 0 ): ?>
 				<p><strong>Inject End</strong>: <?php echo date('n/j \a\t g:iA', $inject['Inject']['time_end']); ?></p>
+				<?php endif; ?>
 				
 				<?php if ( $completed_inject ): ?>
 				<p><strong>Completed By</strong>: <?php echo $inject['User']['username']; ?> at <?php echo date('g:iA', $inject['CompletedInject']['time']); ?></p>
@@ -153,6 +172,39 @@ echo $this->Html->script('injectengine');
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Request Help</h4>
+			</div>
+
+			<div class="modal-body">
+				<p>You are requesting help for <span id="helpModal-injectname"></span>. Please note the following information:</p>
+
+				<p>What we <strong>can</strong> do:</p>
+				<ul>
+					<li>Clarify the inject, or taken hint(s)</li>
+					<li>Tell you if something is supposed to happen</li>
+					<li>Fix something <strong>we</strong> manage, that is broken</li>
+				</ul>
+
+				<p>What we <strong>can not</strong> do:</p>
+				<ul>
+					<li>Give hints, other than ones provided</li>
+					<li>Give you answers</li>
+				</ul>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="helpModal-yesRequest">Yes, Request Help</button>
 			</div>
 		</div>
 	</div>

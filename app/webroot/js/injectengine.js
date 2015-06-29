@@ -2,6 +2,7 @@ var InjectEngine = InjectEngine || {};
 
 InjectEngine = {
 	_injectURL: null,
+	_countdownTimer: null,
 
 	init: function(injectURL) {
 		console.log('InjectEngine-JS: Init');
@@ -30,15 +31,50 @@ InjectEngine = {
 			modal = $(this);
 			injectid = button.data('inject-id');
 
-			// Get the Inject Modal content + inject it in!
-			$.get(InjectEngine._injectURL+'/hint/'+injectid, function(data) {
-				modal.find('.modal-body').html(data);
+			InjectEngine.loadHintModal(modal, injectid);
+		});
 
-				// Rebind to the new HTML
-				$('.hint-btn').click(function() {
-					InjectEngine.handleHintBtn(injectid);
-				});
+		// Bind to the help modal
+		$('#helpModal').on('show.bs.modal', function (event) {
+			button = $(event.relatedTarget);
+			modal = $(this);
+			injectid = button.data('inject-id');
+			injectname = button.data('inject-name');
+
+			// Fill in some information
+			$('#helpModal-injectname').html(injectname);
+
+			// Bind to the submit button
+			$('#helpModal-yesRequest').off('click');
+			$('#helpModal-yesRequest').click(function() {
+				InjectEngine.handleHelpRequest(injectid);
+			})
+		});
+	},
+
+	loadHintModal: function(modal, injectid) {
+		// Get the Inject Modal content + inject it in!
+		$.get(InjectEngine._injectURL+'/hint/'+injectid, function(data) {
+			modal.find('.modal-body').html(data);
+
+			// Rebind to the new HTML
+			$('.hint-btn').click(function() {
+				InjectEngine.handleHintBtn(injectid);
 			});
+
+			InjectEngine._countdownTimer = setInterval(function() {
+				el = $('.hint-disabled-countdown');
+
+				now   = Math.floor(Date.now() / 1000);
+				until = el.data('until');
+
+				if ( now >= until ) {
+					clearInterval(InjectEngine._countdownTimer);
+					InjectEngine.loadHintModal(modal, injectid);
+				} else {
+					el.text('Please wait '+(until-now)+' seconds');
+				}
+			}, 1000);
 		});
 	},
 
@@ -60,16 +96,27 @@ InjectEngine = {
 			.done(function() {
 				// Reload the modal
 				$.get(InjectEngine._injectURL+'/hint/'+injectid, function(data) {
-					$('#hintModal').find('.modal-body').html(data);
-
-					// Rebind to the new HTML
-					$('.hint-btn').click(function() {
-						InjectEngine.handleHintBtn(injectid);
-					});
+					InjectEngine.loadHintModal($('#hintModal'), injectid);
 				});
 			})
 			.error(function() {
 				alert('Request for hint failed. Please contact the White Team.');
 			});
 	},
+
+	handleHelpRequest: function(injectid) {
+		$
+			.post(this._injectURL+'/requestHelp', {id: injectid})
+			.done(function(data) {
+				if ( data != '' ) {
+					alert(data);
+				}
+			})
+			.error(function() {
+				alert('Request for help failed. Please contact the White Team.');
+			})
+			.always(function() {
+				$('#helpModal').modal('hide');
+			});
+	}
 };
