@@ -167,6 +167,10 @@ class InjectsController extends AppController {
 				return $this->ajaxResponse('Soon...');
 			break;
 
+			case 3:
+				return $this->ajaxResponse('Please contact a White Team Member to check this inject.', 400);
+			break;
+
 			default:
 				return $this->ajaxResponse('Unknown type for this inject!', 500);
 			break;
@@ -189,6 +193,10 @@ class InjectsController extends AppController {
 
 				case 2:
 					$inject['Inject']['type_name'] = 'Submission';
+				break;
+
+				case 3:
+					$inject['Inject']['type_name'] = 'Manual';
 				break;
 
 				default:

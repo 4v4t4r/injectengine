@@ -48,6 +48,7 @@ class AppController extends Controller {
 
 	// Config
 	const REFRESH_INTERVAL = (60*5); // 5 minutes
+	const SESSION_TIMEOUT  = (60*30); // 30 minutes
 
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -96,6 +97,14 @@ class AppController extends Controller {
 			$this->requireBackend();
 			$this->set('at_backendpanel', true);
 		}
+
+		// If we're doing an API request not logged in, kill it.
+		if ( isset($this->request->params['api']) && $this->request->params['api'] && !$this->logged_in ) {
+			return $this->ajaxResponse('Please login', 401);
+		}
+
+		// Extend the session
+		$this->Session->write('Config.time', time()+self::SESSION_TIMEOUT);
 	}
 
 	public function afterFilter() {

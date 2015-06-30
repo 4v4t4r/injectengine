@@ -50,6 +50,23 @@ InjectEngine = {
 				InjectEngine.handleHelpRequest(injectid);
 			})
 		});
+
+		// Bind to the manual check modal
+		$('#manualCheckModal').on('show.bs.modal', function (event) {
+			button = $(event.relatedTarget);
+			modal = $(this);
+			injectid = button.data('inject-id');
+			injectname = button.data('inject-name');
+
+			// Fill in some information
+			$('#manualCheckModal-injectname').html(injectname);
+
+			// Bind to the submit button
+			$('#manualCheckModal-yesRequest').off('click');
+			$('#manualCheckModal-yesRequest').click(function() {
+				InjectEngine.handleCheckRequest(injectid);
+			})
+		});
 	},
 
 	loadHintModal: function(modal, injectid) {
@@ -118,5 +135,21 @@ InjectEngine = {
 			.always(function() {
 				$('#helpModal').modal('hide');
 			});
-	}
+	},
+
+	handleCheckRequest: function(injectid) {
+		$
+			.post(this._injectURL+'/requestCheck', {id: injectid})
+			.done(function(data) {
+				if ( data != '' ) {
+					alert(data);
+				}
+			})
+			.error(function() {
+				alert('Request for help failed. Please contact the White Team.');
+			})
+			.always(function() {
+				$('#helpModal').modal('hide');
+			});
+	},
 };

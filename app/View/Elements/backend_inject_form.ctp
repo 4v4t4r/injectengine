@@ -91,13 +91,19 @@
 			<div class="radio">
 				<label>
 					<input type="radio" name="type" id="type1" value="1"<?php echo (!empty($inject) && $inject['Inject']['type'] == 1) ? ' checked="checked"' : ''; ?> required="required">
-					Flag-based
+					Flag
 				</label>
 			</div>
 			<div class="radio">
 				<label>
 					<input type="radio" name="type" id="type2" value="2"<?php echo (!empty($inject) && $inject['Inject']['type'] == 2) ? ' checked="checked"' : ''; ?> required="required">
-					Submission-based
+					Submission
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="type" id="type3" value="3"<?php echo (!empty($inject) && $inject['Inject']['type'] == 3) ? ' checked="checked"' : ''; ?> required="required">
+					Manual Check
 				</label>
 			</div>
 		</div>

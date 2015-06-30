@@ -7,29 +7,34 @@ App::uses('AppModel', 'Model');
 class Inject extends AppModel {
 
 	public function getAllActiveInjects($team_id, $group_id) {
-		$query = '
-			SELECT
-				Inject.*, CompletedInject.*, User.username
-			FROM 
-				injects AS Inject 
-			LEFT JOIN 
-				completed_injects AS CompletedInject 
-			ON 
-				CompletedInject.inject_id = Inject.id AND CompletedInject.team_id = ?
-			LEFT JOIN 
-				users AS User
-			ON 
-				CompletedInject.user_id = User.id 
-			WHERE 
-				Inject.active = ? AND 
-				Inject.group_id = ? AND 
-				(
-					(Inject.time_start <= ? OR Inject.time_start = ?) AND 
-					(Inject.time_end >= ? OR Inject.time_end = ?)
-				)
-			ORDER BY
-				Inject.order ASC';
-
-		return $this->query($query, array($team_id, 1, $group_id, time(), 0, time(), 0));
+		return $this->find('all', array(
+			'fields' => array(
+				'Inject.*', 'CompletedInject.*', 'User.username',
+			),
+			'joins' => array(
+				array(
+					'table' => 'completed_injects',
+					'alias' => 'CompletedInject',
+					'type'  => 'LEFT',
+					'conditions' => array(
+						'CompletedInject.inject_id = Inject.id',
+						'CompletedInject.team_id' => $team_id,
+					),
+				),
+				array(
+					'table' => 'users',
+					'alias' => 'User',
+					'type'  => 'LEFT',
+					'conditions' => array(
+						'CompletedInject.user_id = User.id',
+					),
+				),
+			),
+			'conditions' => array(
+				'Inject.active' => 1,
+				'Inject.group_id' => $group_id,
+			),
+			'order' => 'Inject.order ASC',
+		));
 	}
 }

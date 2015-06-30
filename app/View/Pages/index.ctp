@@ -6,7 +6,6 @@
 <p>&nbsp;</p>
 <ul class="list-group">
 	<li class="list-group-item disabled">ToDo List</li>
-	<li class="list-group-item">Inject Page: Show expired/unfinished</li>
 	<li class="list-group-item">Inject Page: Attachments</li>
 	<li class="list-group-item">Injects: Responses - Uploaded/Manually Entered</li>
 	<li class="list-group-item">Team Panel - Add timeline</li>
@@ -17,6 +16,6 @@
 	<li class="list-group-item">Add inject categories</li>
 	<li class="list-group-item">Add inject "schedule"</li>
 	<li class="list-group-item">Add incident reports</li>
-	<li class="list-group-item">Add API route prefix reports</li>
+	<li class="list-group-item">Move modals to elements</li>
 </ul>
 <?php endif; ?>

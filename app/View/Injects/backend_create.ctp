@@ -5,4 +5,4 @@
 
 <p>&nbsp;</p>
 
-<?php echo $this->element('backend_inject_form', array('inject' => array(), 'groups' => array(), 'injects' => array())); ?>
+<?php echo $this->element('backend_inject_form', array('inject' => array(), 'groups' => $groups, 'injects' => $injects)); ?>

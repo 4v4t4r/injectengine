@@ -106,9 +106,11 @@
 
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
+			<!--
 			<div class="alert alert-info">
 				<strong>Please Note</strong>: The InjectEngine is currently in BETA. There will be bugs.
 			</div>
+			-->
 
 			<?php echo $this->fetch('content'); ?>
 		</div>
