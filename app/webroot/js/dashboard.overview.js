@@ -15,7 +15,7 @@ InjectEngine_Dashboard_Overview = {
 		this.loadTeamStatus();
 
 		// Setup the intervals
-		setInterval(InjectEngine_Dashboard_Overview.loadTeamStatus, this._refreshRate);
+		setInterval(InjectEngine_Dashboard_Overview.loadTeamStatus, this._refreshRate+1);
 	},
 
 	loadTeamStatus: function() {

@@ -8,7 +8,12 @@
 		<input type="text" class="form-control" id="<?php echo $prefix; ?>_order" name="order" placeholder="" required="required">
 	</div>
 </div>
-<p class="help-block">This will be used to determine the hint number</p>
+
+<div class="row">
+	<div class="col-sm-10 col-sm-offset-2">
+		<p class="help-block">This will be used to determine the hint number</p>
+	</div>
+</div>
 
 <div class="form-group">
 	<label for="<?php echo $prefix; ?>_description" class="col-sm-2 control-label">Description</label>
@@ -41,7 +46,11 @@
 		<input type="text" class="form-control" id="<?php echo $prefix; ?>_time_wait" name="time_wait" value="0" placeholder="0" required="required" />
 	</div>
 </div>
-<p class="help-block">How many seconds after this inject becomes available, should this hint be available?</p>
+<div class="row">
+	<div class="col-sm-10 col-sm-offset-2">
+		<p class="help-block">How many seconds after this inject becomes available, should this hint be available?</p>
+	</div>
+</div>
 
 <div class="form-group">
 	<label for="<?php echo $prefix; ?>_time_available" class="col-sm-2 control-label">Hint Available Time</label>
@@ -54,5 +63,8 @@
 		</div>
 	</div>
 </div>
-<p class="help-block">What time should this inject become available to everyone?</p>
-<p class="help-block"><strong>NOTE</strong>: This is checked <u>AFTER</u> the hint wait time.</p>
+<div class="row">
+	<div class="col-sm-10 col-sm-offset-2">
+		<p class="help-block">What time should this inject become available to everyone?<br /><strong>NOTE</strong>: This is checked <u>AFTER</u> the hint wait time.</p>
+	</div>
+</div>

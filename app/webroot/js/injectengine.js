@@ -144,12 +144,16 @@ InjectEngine = {
 				if ( data != '' ) {
 					alert(data);
 				}
+
+				$('#inject'+injectid+'-requestCheckBtn')
+					.addClass('disabled')
+					.text('Check Requested');
 			})
 			.error(function() {
 				alert('Request for help failed. Please contact the White Team.');
 			})
 			.always(function() {
-				$('#helpModal').modal('hide');
+				$('#manualCheckModal').modal('hide');
 			});
 	},
 };

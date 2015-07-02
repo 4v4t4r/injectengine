@@ -15,9 +15,11 @@ InjectEngine_Dashboard_Personal = {
 
 		// Load the initial data
 		this.loadTeamStatus();
+		this.loadTeamTimeline();
 
 		// Setup the intervals
-		setInterval(InjectEngine_Dashboard_Personal.loadTeamStatus, this._refreshRate);
+		setInterval(InjectEngine_Dashboard_Personal.loadTeamStatus, this._refreshRate+1);
+		setInterval(InjectEngine_Dashboard_Personal.loadTeamTimeline, this._refreshRate+2);
 	},
 
 	loadTeamStatus: function() {
@@ -28,6 +30,17 @@ InjectEngine_Dashboard_Personal = {
 			.get(url)
 			.done(function(data) {
 				$('#teamStatus-group').html(data);
+			});
+	},
+
+	loadTeamTimeline: function() {
+		that = InjectEngine_Dashboard_Personal;
+		url = that._url+'/getTeamsTimeline/'+that._teams;
+
+		$
+			.get(url)
+			.done(function(data) {
+				$('#teams-inject-timeline').html(data);
 			});
 	},
 };

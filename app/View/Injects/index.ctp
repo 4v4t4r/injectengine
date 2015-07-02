@@ -47,6 +47,7 @@ echo $this->Html->script('injectengine');
 
 		$completed_inject = ($inject['CompletedInject']['id'] !== null);
 		$expired_inject = (!$completed_inject && $inject['Inject']['time_end'] > 0 && $inject['Inject']['time_end'] < time());
+		$check_requested = ($inject['RequestedCheck']['id'] !== null);
 	?>
 	
 	<div class="panel <?php echo ($completed_inject) ? 'panel-success' : ($expired_inject ? 'panel-warning' : 'panel-primary'); ?>">
@@ -149,14 +150,14 @@ echo $this->Html->script('injectengine');
 									</div>
 									<div class="col-sm-2">
 										<button 
-											class="btn btn-primary" 
+											id="inject<?php echo $inject['Inject']['id']; ?>-requestCheckBtn"
+											class="btn btn-primary<?php echo ($completed_inject OR $expired_inject OR $check_requested) ? ' disabled' : ''; ?>" 
 											data-toggle="modal" 
 											data-target="#manualCheckModal" 
 											data-inject-id="<?php echo $inject['Inject']['id']; ?>"
 											data-inject-name="<?php echo $inject['Inject']['title']; ?>" 
-											<?php echo ($completed_inject OR $expired_inject) ? ' disabled="disabled"' : ''; ?>
 										>
-											Request Check
+											<?php echo $check_requested ? 'Check Requested' : 'Request Check'; ?>
 										</button>
 									</div>
 								</div>

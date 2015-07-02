@@ -1,12 +1,3 @@
-<?php echo $this->Html->css('timeline'); ?>
-
-<h2>Team Panel</h2>
-<h4><?php echo $teaminfo['name']; ?></h4>
-
-<?php echo $this->element('team_navbar', array('at_events' => true)); ?>
-
-<p>&nbsp;</p>
-
 <div class="timeline">
 	<div class="line text-muted"></div>
 
@@ -19,7 +10,7 @@
 		</div>
 
 		<div class="panel-body">
-			<p><strong><?php echo $item['Inject']['title']; ?></strong> was completed</p>
+			<p><?php echo $item['Team']['name']; ?> completed <?php echo $item['Inject']['title']; ?></p>
 			<p class="text-muted"><?php echo date('n/j \a\t g:iA', $item['CompletedInject']['time']); ?></p>
 		</div>
 	</div>

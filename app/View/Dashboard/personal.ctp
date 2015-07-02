@@ -3,6 +3,7 @@ $teams_arr  = array();
 $teams_id   = array();
 foreach ( $teams AS $team ) { $teams_arr[] = $team['Team']['name']; $teams_id[] = $team['Team']['id']; }
 
+echo $this->Html->css('timeline');
 echo $this->Html->script('dashboard.personal');
 ?>
 
@@ -14,22 +15,12 @@ echo $this->Html->script('dashboard.personal');
 </div>
 
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Team Inject Standings</div>
+			<div class="panel-heading">Team Inject Completion Timeline</div>
 
-			<div class="panel-body">
-				<img src="//placehold.it/300x200" />
-			</div>
-		</div>
-	</div>
-
-	<div class="col-md-6">
-		<div class="panel panel-default">
-			<div class="panel-heading">Inject Completion Rates</div>
-
-			<div class="panel-body">
-				<img src="//placehold.it/300x200" />
+			<div class="panel-body" id="teams-inject-timeline">
+				<em>Loading...</em>
 			</div>
 		</div>
 	</div>

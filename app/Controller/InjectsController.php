@@ -2,7 +2,7 @@
 App::uses('AppController', 'Controller');
 
 class InjectsController extends AppController {
-	public $uses = array('Team', 'User', 'Hint', 'Inject', 'CompletedInject', 'UsedHint', 'Group', 'Help');
+	public $uses = array('Team', 'User', 'Hint', 'Inject', 'CompletedInject', 'RequestedCheck', 'UsedHint', 'Group', 'Help');
 
 	// ===============[ REGULAR ROUTES
 	public function beforeFilter() {
@@ -127,6 +127,36 @@ class InjectsController extends AppController {
 		return $this->ajaxResponse('Help request received! A White Team member will be arriving shortly.');
 	}
 
+	public function requestCheck() {
+		if ( !$this->request->is('post') ) $this->redirect('/');
+
+		if ( !isset($this->request->data['id']) || !is_numeric($this->request->data['id']) ) return $this->barf(true);
+
+		// Check if they have a previous check request for this inject
+		$prevRequests = $this->RequestedCheck->find('all', array(
+			'conditions' => array(
+				'inject_id' => $this->request->data['id'],
+				'team_id'   => $this->teaminfo['id'],
+				'status'    => 0,
+			),
+		));
+
+		// Status code of 200 so the JS knows what to alert
+		if ( !empty($prevRequests) ) return $this->ajaxResponse('You already have a pending check request for this inject. A White Team member will be arriving shortly.');
+
+		// Create new help request
+		$this->RequestedCheck->create();
+		$this->RequestedCheck->save(array(
+			'inject_id' => $this->request->data['id'],
+			'user_id' => $this->userinfo['id'],
+			'team_id' => $this->teaminfo['id'],
+			'time_requested' => time(),
+			'status' => 0,
+		));
+
+		return $this->ajaxResponse('Inject check request received! A White Team member will be arriving shortly.');
+	}
+
 	public function submit() {
 		if ( !$this->request->is('post') ) $this->redirect('/');
 
@@ -183,7 +213,9 @@ class InjectsController extends AppController {
 			'belongsTo' => array('Group')
 		));
 
-		$injects = $this->Inject->find('all');
+		$injects = $this->Inject->find('all', array(
+			'order' => 'Inject.order ASC',
+		));
 
 		foreach ( $injects AS &$inject ) {
 			switch ( $inject['Inject']['type'] ) {
@@ -215,6 +247,7 @@ class InjectsController extends AppController {
 				!isset($this->request->data['description']) OR 
 				!isset($this->request->data['group_id']) OR 
 				!isset($this->request->data['dependency']) OR 
+				!isset($this->request->data['explanation']) OR 
 				!isset($this->request->data['time_start']) OR 
 				!isset($this->request->data['time_end']) OR 
 				!isset($this->request->data['active']) OR 
@@ -230,7 +263,7 @@ class InjectsController extends AppController {
 				!is_numeric($this->request->data['type']) OR 
 				!is_numeric($this->request->data['hints_enabled']) OR 
 				!is_numeric($this->request->data['order']) OR 
-				(count($this->request->data) != 11 AND count($this->request->data) != 12)
+				(count($this->request->data) != 12 AND count($this->request->data) != 13)
 			) {
 				$this->barf();
 			}
@@ -268,6 +301,7 @@ class InjectsController extends AppController {
 			if ( 
 				!isset($this->request->data['title']) OR 
 				!isset($this->request->data['description']) OR 
+				!isset($this->request->data['explanation']) OR 
 				!isset($this->request->data['group_id']) OR 
 				!isset($this->request->data['dependency']) OR 
 				!isset($this->request->data['time_start']) OR 
@@ -285,7 +319,7 @@ class InjectsController extends AppController {
 				!is_numeric($this->request->data['type']) OR 
 				!is_numeric($this->request->data['hints_enabled']) OR 
 				!is_numeric($this->request->data['order']) OR 
-				(count($this->request->data) != 11 AND count($this->request->data) != 12)
+				(count($this->request->data) != 12 AND count($this->request->data) != 13)
 			) {
 				$this->barf();
 			}
@@ -400,7 +434,11 @@ class InjectsController extends AppController {
 			'hasMany' => array('Hint'),
 		));
 
-		$this->set('injects', $this->Inject->find('all'));
+		$this->set('injects', $this->Inject->find('all', array(
+			'conditions' => array(
+				'hints_enabled' => 1,
+			),
+		)));
 	}
 
 	public function backend_responses() {

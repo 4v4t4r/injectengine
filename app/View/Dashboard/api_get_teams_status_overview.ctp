@@ -34,22 +34,15 @@
 
 						<?php endif; ?>
 
-						<span class="label label-info">WAITING FOR CHECK</span>
+						<?php if ( !empty($team['RequestedChecks']) ): ?>
+						<span class="label label-info">WAITING FOR CHECK (<?php echo count($team['RequestedChecks']); ?>)</span>
+						<?php endif; ?>
 					</td>
 
-					<td><?php echo $team['CurrentInject']['title']; ?></td>
+					<td><?php echo ($team['CurrentInject']['title'] !== null ? $team['CurrentInject']['title'] : 'N/A'); ?></td>
 
 					<td>
 						<a href="<?php echo $this->Html->url('/dashboard/personal/'.$team['Team']['id']); ?>" class="btn btn-sm btn-primary">VIEW</a>
-						<?php if ( $team['Help']['status'] == 1 ): ?>
-
-						<a href="#" class="btn btn-sm btn-info">ACK</a>
-
-						<?php elseif ( $team['Help']['status'] == 2): ?>
-
-						<a href="#" class="btn btn-sm btn-success">FIN</a>
-
-						<?php endif; ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

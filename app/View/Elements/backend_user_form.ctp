@@ -35,11 +35,16 @@
 		<label for="expires" class="col-sm-3 control-label">Account Expiration</label>
 		<div class="col-sm-9">
 			<div class="input-group date datetimepicker" id="expires_datepicker">
-				<input type="text" class="form-control time-use-data" id="expires" name="expires" value="<?php echo !empty($user) ? $user['User']['expires'] : ''; ?>" placeholder="0 means never" required="required" />
+				<input type="text" class="form-control time-use-data" id="expires" name="expires" value="<?php echo !empty($user) ? $user['User']['expires'] : ''; ?>"  required="required" />
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-calendar"></span>
 				</span>
 			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-9 col-sm-offset-3">
+			<p class="help-block">Please enter "0" if this account will never expire</p>
 		</div>
 	</div>
 

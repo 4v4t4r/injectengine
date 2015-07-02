@@ -13,7 +13,7 @@
 			<div class="panel-heading">Team Inject Standings</div>
 
 			<div class="panel-body">
-				<img src="//placehold.it/300x200" />
+				<img src="//placehold.it/300x200" class="center-block" />
 			</div>
 		</div>
 	</div>
@@ -23,7 +23,7 @@
 			<div class="panel-heading">Inject Completion Rates</div>
 
 			<div class="panel-body">
-				<img src="//placehold.it/300x200" />
+				<img src="//placehold.it/300x200" class="center-block" />
 			</div>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 			<div class="panel-heading">Hint Usage Per Team</div>
 
 			<div class="panel-body">
-				<img src="//placehold.it/300x200" />
+				<img src="//placehold.it/300x200" class="center-block" />
 			</div>
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 			<div class="panel-heading">Hint Usage Per Inject</div>
 
 			<div class="panel-body">
-				<img src="//placehold.it/300x200" />
+				<img src="//placehold.it/300x200" class="center-block" />
 			</div>
 		</div>
 	</div>
@@ -57,7 +57,7 @@
 			<div class="panel-heading">Service Downtime (Overall)</div>
 
 			<div class="panel-body">
-				<img src="//placehold.it/300x200" />
+				<img src="//placehold.it/300x200" class="center-block" />
 			</div>
 		</div>
 	</div>
@@ -67,7 +67,7 @@
 			<div class="panel-heading">Server Downtime (Overall)</div>
 
 			<div class="panel-body">
-				<img src="//placehold.it/300x200" />
+				<img src="//placehold.it/300x200" class="center-block" />
 			</div>
 		</div>
 	</div>

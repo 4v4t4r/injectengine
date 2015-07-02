@@ -10,7 +10,7 @@
 	<div id="team<?php echo $team['Team']['id']; ?>" class="panel-collapse collapse in" role="tabpanel">
 		<div class="panel-body">
 			<div class="row">
-				<div class="col-sm-6 text-center" style="border-right: thin solid #000;">
+				<div class="col-sm-4 text-center" style="border-right: thin solid #000;">
 					<p>Team Status</p>
 
 					<?php if ( $team['Help']['status'] == null ): ?>
@@ -33,7 +33,8 @@
 
 					<?php endif; ?>
 				</div>
-				<div class="col-sm-6 text-center">
+				<!--
+				<div class="col-sm-4 text-center">
 					<p>Team Members</p>
 
 					<ul class="list-group">
@@ -41,6 +42,59 @@
 						<li class="list-group-item"><?php echo $user['username']; ?></li>
 						<?php endforeach; ?>
 					</ul>
+				</div>
+				-->
+				<div class="col-sm-8 text-center">
+					<p>Team Health</p>
+
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td>Current Inject</td>
+								<td><?php echo ($team['CurrentInject']['title'] !== null ? $team['CurrentInject']['title'] : 'N/A'); ?></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Needs Help</td>
+
+								<?php if ( $team['Help']['status'] === null ): ?>
+
+								<td>N/A</td>
+								<td>N/A</td>
+
+								<?php else: ?>
+								
+								<td><?php echo $team['HelpInject']['title']; ?></td>
+
+								<?php if ( $team['Help']['status'] == 1 || $team['Help']['status'] == 2 ): ?>
+
+								<td><a href="<?php echo $this->Html->url('/dashboard/help/'.$team['Help']['id']); ?>" class="btn btn-xs btn-primary">View</a></td>
+
+								<?php endif; ?>
+
+								<?php endif; ?>
+							</tr>
+							<?php if ( empty($team['RequestedChecks']) ): ?>
+
+							<tr>
+								<td>Needs Checking</td>
+								<td>N/A</td>
+								<td>N/A</td>
+							</tr>
+
+							<?php else: ?>
+
+							<?php foreach ( $team['RequestedChecks'] AS $i => $requestedCheck ): ?>
+							<tr>
+								<td>Needs Checking (#<?php echo $i+1; ?>)</td>
+								<td><?php echo $requestedCheck['Inject']['title']; ?></td>
+								<td><a href="<?php echo $this->Html->url('/dashboard/check/'.$requestedCheck['RequestedCheck']['id']); ?>" class="btn btn-xs btn-primary">Start</a>
+							</tr>
+							<?php endforeach; ?>
+
+							<?php endif; ?>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

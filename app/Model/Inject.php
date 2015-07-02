@@ -9,7 +9,7 @@ class Inject extends AppModel {
 	public function getAllActiveInjects($team_id, $group_id) {
 		return $this->find('all', array(
 			'fields' => array(
-				'Inject.*', 'CompletedInject.*', 'User.username',
+				'Inject.*', 'CompletedInject.*', 'User.username', 'RequestedCheck.*',
 			),
 			'joins' => array(
 				array(
@@ -27,6 +27,15 @@ class Inject extends AppModel {
 					'type'  => 'LEFT',
 					'conditions' => array(
 						'CompletedInject.user_id = User.id',
+					),
+				),
+				array(
+					'table' => 'requested_checks',
+					'alias' => 'RequestedCheck',
+					'type'  => 'LEFT',
+					'conditions' => array(
+						'RequestedCheck.team_id' => $team_id,
+						'RequestedCheck.inject_id = Inject.id',
 					),
 				),
 			),

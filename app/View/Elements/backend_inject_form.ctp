@@ -12,11 +12,33 @@
 			<input type="text" class="form-control" id="title" name="title" value="<?php echo !empty($inject) ? $inject['Inject']['title'] : ''; ?>" required="required" />
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-sm-9 col-sm-offset-3">
+			<p class="help-block">The Inject Title has to be unique</p>
+		</div>
+	</div>
 
 	<div class="form-group">
 		<label for="description" class="col-sm-3 control-label">Description</label>
 		<div class="col-sm-9">
-			<textarea class="form-control" name="description" id="description" rows="10"></textarea>
+			<textarea class="form-control wysiwyg" name="description" id="description" rows="10"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-9 col-sm-offset-3">
+			<p class="help-block">This will be shown to the assigned group.</p>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="explanation" class="col-sm-3 control-label">Explanation</label>
+		<div class="col-sm-9">
+			<textarea class="form-control wysiwyg" name="explanation" id="explanation" rows="10"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-9 col-sm-offset-3">
+			<p class="help-block">This will be shown to White Team members when assisting or checking the inject.</p>
 		</div>
 	</div>
 
@@ -47,11 +69,16 @@
 		<label for="time_start" class="col-sm-3 control-label">Start Time</label>
 		<div class="col-sm-9">
 			<div class="input-group date datetimepicker" id="time_start_datepicker">
-				<input type="text" class="form-control time-use-data" id="time_start" name="time_start" value="<?php echo !empty($inject) ? $inject['Inject']['time_start'] : ''; ?>" placeholder="0 means immediately" required="required" />
+				<input type="text" class="form-control time-use-data" id="time_start" name="time_start" value="<?php echo !empty($inject) ? $inject['Inject']['time_start'] : ''; ?>" required="required" />
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-calendar"></span>
 				</span>
 			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-9 col-sm-offset-3">
+			<p class="help-block">Please enter "0" if this inject starts immediately</p>
 		</div>
 	</div>
 
@@ -59,11 +86,16 @@
 		<label for="time_end" class="col-sm-3 control-label">End Time</label>
 		<div class="col-sm-9">
 			<div class="input-group date datetimepicker" id="time_end_datepicker">
-				<input type="text" class="form-control time-use-data" id="time_end" name="time_end" value="<?php echo !empty($inject) ? $inject['Inject']['time_end'] : ''; ?>" placeholder="0 means immediately" required="required" />
+				<input type="text" class="form-control time-use-data" id="time_end" name="time_end" value="<?php echo !empty($inject) ? $inject['Inject']['time_end'] : ''; ?>" required="required" />
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-calendar"></span>
 				</span>
 			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-9 col-sm-offset-3">
+			<p class="help-block">Please enter "0" if this inject does not have an end time</p>
 		</div>
 	</div>
 
@@ -112,7 +144,7 @@
 	<div class="form-group">
 		<label for="flag" class="col-sm-3 control-label">Flag (If Applicable)</label>
 		<div class="col-sm-9">
-			<input type="text" class="form-control" id="flag" name="flag" value="<?php echo !empty($inject) ? $inject['Inject']['flag'] : ''; ?>" required="required" />
+			<input type="text" class="form-control" id="flag" name="flag" value="<?php echo !empty($inject) ? $inject['Inject']['flag'] : ''; ?>" />
 		</div>
 	</div>
 
@@ -140,6 +172,11 @@
 			<input type="text" class="form-control" id="order" name="order" value="<?php echo !empty($inject) ? $inject['Inject']['order'] : ''; ?>" required="required" />
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-sm-9 col-sm-offset-3">
+			<p class="help-block">This will be used to determine the ordering of the injects. Sorted by lowest number</p>
+		</div>
+	</div>
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">
@@ -150,7 +187,7 @@
 
 <script>
 $(document).ready(function() {
-	$('#description').wysihtml5({
+	$('.wysiwyg').wysihtml5({
 		toolbar: {
 			html: true,
 			size: "xs",
@@ -164,7 +201,8 @@ $(document).ready(function() {
 
 	<?php if ( !empty($inject) ): ?>
 	$('#description').html('<?php echo addslashes($inject['Inject']['description']); ?>');
-	
+	$('#explanation').html('<?php echo addslashes($inject['Inject']['explanation']); ?>');
+
 	$('#time_start_datepicker').data('DateTimePicker').date(moment.unix('<?php echo $inject['Inject']['time_start']; ?>'));
 	$('#time_end_datepicker').data('DateTimePicker').date(moment.unix('<?php echo $inject['Inject']['time_end']; ?>'));
 	<?php endif; ?>

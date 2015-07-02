@@ -110,7 +110,7 @@ class AppController extends Controller {
 	public function afterFilter() {
 		parent::afterFilter();
 
-		if ( !$this->backend_access ) {
+		if ( !$this->backend_access && false ) {
 			// Clean the HTML
 			$buffer = $this->response->body();
 
@@ -241,7 +241,7 @@ class AppController extends Controller {
 
 	protected function logMessage($type, $message, $ip=-1, $user_id=-1) {
 		if ( $ip === -1 ) $ip = $_SERVER['REMOTE_ADDR'];
-		if ( $user_id === -1 ) $user_id = $this->userinfo['id'];
+		if ( $user_id === -1 && !empty($this->userinfo) ) $user_id = $this->userinfo['id'];
 
 		$this->Log->create();
 		$this->Log->save(array(
