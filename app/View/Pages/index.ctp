@@ -7,11 +7,6 @@
 
 <p>&nbsp;</p>
 <ul class="list-group checked-list-box">
-	<li class="list-group-item disabled">ToDo List before Camp Simulation</li>
-	<li class="list-group-item">Pretty Backend Panel Dashboard graphs</li>
-</ul>
-
-<ul class="list-group checked-list-box">
 	<li class="list-group-item disabled">ToDo List Future</li>
 	<li class="list-group-item">Team/Group edit name/permissions</li>
 	<li class="list-group-item">Inject Page: Attachments</li>
@@ -32,5 +27,8 @@
 	<li class="list-group-item">Move all ajax only methods to the ajax request prefix</li>
 	<li class="list-group-item">Better javascript modulization/organization</li>
 	<li class="list-group-item">Constants for Completition Start Date, Competition Name, Competition Logo, etc</li>
+	<li class="list-group-item">Revamp logging</li>
+	<li class="list-group-item">Better code organization (aka: oh gosh DashboardController, I'm so sorry) - split backend/api stuff into other controllers?</li>
+	<li class="list-group-item">Make InjectController::index.ctp readable again</li>
 </ul>
 <?php endif; ?>
