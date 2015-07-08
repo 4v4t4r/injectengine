@@ -27,12 +27,7 @@ class DashboardController extends AppController {
 
 		if ( !is_array($teams) || $teams !== array_filter($teams, 'is_numeric') ) return $this->barf(true);
 
-		$this->set('teams', $this->Team->find('all', array(
-			'conditions' => array(
-				'Team.group_id' => self::BLUE_TEAM_GID,
-				'Team.id' => $teams,
-			),
-		)));
+		$this->set('teams', $this->Team->findAllByGroupIdAndId(self::BLUE_TEAM_GID, $teams));
 	}
 
 	public function setup() {
@@ -50,11 +45,7 @@ class DashboardController extends AppController {
 			$this->redirect('/dashboard/personal/'.$teams);
 		}
 
-		$this->set('teams', $this->Team->find('all', array(
-			'conditions' => array(
-				'group_id' => self::BLUE_TEAM_GID,
-			),
-		)));
+		$this->set('teams', $this->Team->findAllByGroupId(self::BLUE_TEAM_GID));
 	}
 
 	public function help($id=false) {
@@ -95,38 +86,7 @@ class DashboardController extends AppController {
 			}
 		}
 
-		$help = $this->Help->find('first', array(
-			'fields' => array('*'),
-			'joins'  => array(
-				array(
-					'table' => 'users',
-					'alias' => 'User',
-					'type'  => 'INNER',
-					'conditions' => array(
-						'Help.requested_user_id = User.id',
-					),
-				),
-				array(
-					'table' => 'teams',
-					'alias' => 'Team',
-					'type'  => 'INNER',
-					'conditions' => array(
-						'Help.requested_team_id = Team.id',
-					),
-				),
-				array(
-					'table' => 'injects',
-					'alias' => 'Inject',
-					'type'  => 'INNER',
-					'conditions' => array(
-						'Help.inject_id = Inject.id',
-					),
-				),
-			),
-			'conditions' => array(
-				'Help.id' => $id,
-			),
-		));
+		$help = $this->Help->getExtendedInfo($id);
 
 		$assigned_user = array();
 		if ( $help['Help']['assigned_user_id'] > 0 ) {
@@ -183,38 +143,7 @@ class DashboardController extends AppController {
 			$this->redirect('/dashboard/personal/'.$check['RequestedCheck']['team_id']);
 		}
 
-		$this->set('check', $this->RequestedCheck->find('first', array(
-			'fields' => array('*'),
-			'joins'  => array(
-				array(
-					'table' => 'users',
-					'alias' => 'User',
-					'type'  => 'INNER',
-					'conditions' => array(
-						'RequestedCheck.user_id = User.id',
-					),
-				),
-				array(
-					'table' => 'teams',
-					'alias' => 'Team',
-					'type'  => 'INNER',
-					'conditions' => array(
-						'RequestedCheck.team_id = Team.id',
-					),
-				),
-				array(
-					'table' => 'injects',
-					'alias' => 'Inject',
-					'type'  => 'INNER',
-					'conditions' => array(
-						'RequestedCheck.inject_id = Inject.id',
-					),
-				),
-			),
-			'conditions' => array(
-				'RequestedCheck.id' => $id,
-			),
-		)));
+		$this->set('check', $this->getExtendedInfo($id));
 	}
 
 	//==========================[ HTML APIS

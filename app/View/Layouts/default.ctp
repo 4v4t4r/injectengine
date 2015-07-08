@@ -75,6 +75,8 @@
 				<?php endif; ?>
 
 				<?php if ( $backend_access ): ?>
+				<li class="<?php echo isset($at_cnc) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/backend/cmdcontrol'); ?>">C&amp;C Manager</a></li>
+
 				<li class="dropdown<?php echo isset($at_backendpanel) ? ' active' : ''; ?>">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
 						Backend Panel <span class="caret"></span>
