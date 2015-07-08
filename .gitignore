@@ -10,6 +10,11 @@
 /tags
 *.mo
 
+# Composer #
+############
+/vendor
+composer.lock
+
 # IDE and editor specific files #
 #################################
 /nbproject
