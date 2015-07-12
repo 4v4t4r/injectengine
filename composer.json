@@ -2,5 +2,8 @@
 	"name": "injectengine",
 	"require": {
 		"cakephp/cakephp": "2.6.*"
+	},
+	"config": {
+		"vendor-dir": "Vendor/"
 	}
 }

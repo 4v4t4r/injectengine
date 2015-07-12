@@ -39,7 +39,6 @@ if (!defined('ROOT')) {
 	define('ROOT', dirname(dirname(dirname(__FILE__))));
 }
 
-
 /**
  * The actual directory name for the "app".
  *
@@ -62,10 +61,17 @@ if (!defined('APP_DIR')) {
  * The following line differs from its sibling
  * /lib/Cake/Console/Templates/skel/webroot/index.php
  */
-define(
-    'CAKE_CORE_INCLUDE_PATH',
-    ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS . 'lib'
-);
+//define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'lib');
+
+/**
+ * This auto-detects CakePHP as a composer installed library.
+ * You may remove this if you are not planning to use composer (not recommended, though).
+ */
+$vendorPath = ROOT . DS . APP_DIR . DS . 'Vendor' . DS . 'cakephp' . DS . 'cakephp' . DS . 'lib';
+$dispatcher = 'Cake' . DS . 'Console' . DS . 'ShellDispatcher.php';
+if (!defined('CAKE_CORE_INCLUDE_PATH') && file_exists($vendorPath . DS . $dispatcher)) {
+	define('CAKE_CORE_INCLUDE_PATH', $vendorPath);
+}
 
 /**
  * Editing below this line should NOT be necessary.
