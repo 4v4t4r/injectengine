@@ -36,6 +36,7 @@ class Inject extends AppModel {
 					'conditions' => array(
 						'RequestedCheck.team_id' => $team_id,
 						'RequestedCheck.inject_id = Inject.id',
+						'RequestedCheck.status' => 0,
 					),
 				),
 			),
