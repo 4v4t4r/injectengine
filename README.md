@@ -10,5 +10,7 @@ cd /path/to/InjectEngine
 
 composer install
 
-./vendor/bin/cake schema create
+./Console/cake schema create
 ```
+
+Finally, point your webroot to the directory "webroot" inside the folder you cloned this repo to.
