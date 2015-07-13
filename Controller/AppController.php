@@ -190,7 +190,7 @@ class AppController extends Controller {
 		}
 
 		// Generate logout token
-		$userinfo['User']['logout_token'] = sha1(String::uuid());
+		$userinfo['User']['logout_token'] = Security::hash(CakeText::uuid());
 
 		// Generate refresh interval (5 minutes)
 		$userinfo['User']['refresh_info'] = time() + self::REFRESH_INTERVAL;
