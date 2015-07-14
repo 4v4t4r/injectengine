@@ -66,6 +66,8 @@ class AppController extends Controller {
 	const REFRESH_INTERVAL = (60*5); // 5 minutes
 	const SESSION_TIMEOUT  = (60*30); // 30 minutes
 	const BLUE_TEAM_GID    = 2;
+	const COMPETITION_NAME = 'UBNETDEF';
+	const COMPETITION_LOGO = false;
 
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -108,6 +110,8 @@ class AppController extends Controller {
 		$this->set('dashboard_access', $this->dashboard_access);
 		$this->set('teampanel_access', $this->teampanel_access);
 		$this->set('emulating', $this->Session->read('User.emulating'));
+		$this->set('competition_name', self::COMPETITION_NAME);
+		$this->set('competition_logo', self::COMPETITION_LOGO);
 
 		// If we're doing a backend request, require backend access
 		if ( isset($this->request->params['backend']) && $this->request->params['backend'] ) {

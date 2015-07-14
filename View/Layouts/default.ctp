@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-	<title>GenCyber: InjectEngine</title>
+	<title><?php echo $competition_name; ?>: Inject Engine</title>
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -28,7 +28,7 @@
 </div>
 <?php endif; ?>
 
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default<?php echo $competition_logo != false ? ' navbar-with-logo' : ''; ?>">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -38,10 +38,18 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="<?php echo $this->Html->url('/'); ?>">
-				<img src="<?php echo $this->Html->url('/img/gencyber.png'); ?>"/>
+				<?php if ( $competition_logo != false ): ?>
+				
+				<img src="<?php echo $this->Html->url($competition_logo); ?>"/>
+				
+				<?php else: ?>
+
+				<?php echo $competition_name; ?>
+				
+				<?php endif; ?>
 			</a>
 		</div>
-		<div id="navbar" class="navbar-collapse collapse">
+		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li class="<?php echo isset($at_home) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/'); ?>">Home</a></li>
 
@@ -49,9 +57,7 @@
 				<li class="<?php echo isset($at_injects) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/injects'); ?>">Injects</a></li>
 				<?php endif; ?>
 
-				<!--
 				<li class="<?php echo isset($at_scoreboard) ? 'active' : ''; ?>"><a href="<?php echo $this->Html->url('/scoreboard'); ?>">Scoreboard</a></li>
-				-->
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">
