@@ -12,10 +12,10 @@ class TeamController extends AppController {
 	}
 
 	public function index() {
-		$this->set('timeline', $this->getTimelineInfo($this->teaminfo['id']));
+		$this->set('timeline', $this->CompletedInject->getTimelineInfo($this->teaminfo['id']));
 	}
 
 	public function membership() {
-		$this->set('members', $this->getTeamMembership($this->teaminfo['id']));
+		$this->set('members', $this->User->getTeamMembership($this->teaminfo['id']));
 	}
 }

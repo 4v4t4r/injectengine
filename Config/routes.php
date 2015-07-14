@@ -19,6 +19,8 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+App::uses('Folder', 'Utility');
+
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
@@ -27,12 +29,25 @@
 	Router::connect('/', array('controller' => 'pages', 'action' => 'index'));
 	Router::connect('/scoreboard', array('controller' => 'pages', 'action' => 'scoreboard'));
 
-	// Backend Index
-	Router::connect('/backend', array('controller' => 'backend', 'action' => 'index'));
+	// "Special" Routes
+	$specialRoutes = array('Api', 'Backend');
+	foreach ( $specialRoutes AS $route ) {
+		$dirname = ROOT . DS . APP_DIR . DS . 'Controller' . DS . $route;
+		$dir = new Folder($dirname);
+		$rtLow = strtolower($route);
+		$files = $dir->read(false, true);
 
-	// Backend Logs
-	Router::connect('/backend/logs', array('controller' => 'backend', 'action' => 'logs'));
-	Router::connect('/backend/logs/*', array('controller' => 'backend', 'action' => 'logs'));
+		foreach ( $files[1] AS $file ) {
+			if ( $file == $route.'AppController.php' ) continue;
+
+			$controller = substr($file, 0, strpos($file, 'Controller'));
+			$controllerRt  = strtolower(substr($controller, strlen($route)));
+
+			Router::connect('/'.$rtLow.'/'.$controllerRt, array('controller' => $controller, 'action' => 'index'));
+			Router::connect('/'.$rtLow.'/'.$controllerRt.'/:action/*', array('controller' => $controller));
+		}
+	}
+	unset($specialRoutes);
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

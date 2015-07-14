@@ -50,6 +50,12 @@ Cache::config('default', array('engine' => 'File'));
  * ));
  *
  */
+App::build(array(
+	'Controller' => array(
+		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS,
+		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Backend' . DS,
+	),
+));
 
 /**
  * Custom Inflector rules can be set to correctly pluralize or singularize table, model, controller names or whatever other

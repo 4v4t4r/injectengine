@@ -1,7 +1,7 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('BackendAppController', 'Controller');
 
-class BackendController extends AppController {
+class BackendLogsController extends BackendAppController {
 	public $uses = array('Log', 'User');
 	public $components = array('Paginator');
 
@@ -12,18 +12,7 @@ class BackendController extends AppController {
 		),
 	);
 
-	public function beforeFilter() {
-		parent::beforeFilter();
-
-		$this->requireBackend();
-		$this->set('at_backendpanel', true);
-	}
-
-	public function index() {
-		$this->redirect('/');
-	}
-
-	public function logs($type=false) {
+	public function index($type=false) {
 		$this->Paginator->settings = $this->paginate;
 
 		if ( $type !== false ) {
