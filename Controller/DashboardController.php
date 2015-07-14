@@ -65,7 +65,7 @@ class DashboardController extends AppController {
 					$this->Help->save(array(
 						'assigned_user_id' => $this->userinfo['id'],
 						'time_started'     => time(),
-						'status'           => 2,
+						'status'           => self::HELP_STATUS_ACK,
 					));
 
 					return $this->ajaxResponse('');
@@ -74,7 +74,7 @@ class DashboardController extends AppController {
 				case 2:
 					$this->Help->save(array(
 						'time_finished'    => time(),
-						'status'           => 3,
+						'status'           => self::HELP_STATUS_FIN,
 					));
 
 					return $this->ajaxResponse('');
@@ -113,14 +113,14 @@ class DashboardController extends AppController {
 				case 0:
 					$this->RequestedCheck->save(array(
 						'time_finished'     => time(),
-						'status'           => 1,
+						'status'           => self::CHECK_STATUS_REJECTED,
 					));
 				break;
 
 				case 1:
 					$this->RequestedCheck->save(array(
 						'time_finished'    => time(),
-						'status'           => 2,
+						'status'           => self::CHECK_STATUS_ACCEPTED,
 					));
 
 					$this->CompletedInject->create();

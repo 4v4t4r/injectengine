@@ -117,7 +117,7 @@ class InjectsController extends AppController {
 			'inject_id' => $this->request->data['id'],
 			'requested_user_id' => $this->userinfo['id'],
 			'requested_team_id' => $this->teaminfo['id'],
-			'requested_time' => time(),
+			'time_requested' => time(),
 			'status' => 1,
 		));
 

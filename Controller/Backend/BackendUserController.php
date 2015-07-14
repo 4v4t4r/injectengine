@@ -35,8 +35,6 @@ class BackendUserController extends BackendAppController {
 
 			if ( !empty($usernameCheck) ) throw new BadRequestException('Username already exists!');
 
-			$userinfo['password'] = Security::hash($userinfo['password'], 'blowfish');
-
 			// Create it
 			$this->User->create();
 			$this->User->save($userinfo);
@@ -75,9 +73,7 @@ class BackendUserController extends BackendAppController {
 
 			$userinfo = $this->request->data;
 
-			if ( !empty($userinfo['password']) ) {
-				$userinfo['password'] = Security::hash($userinfo['password'], 'blowfish');
-			} else {
+			if ( empty($userinfo['password']) ) {
 				unset($userinfo['password']);
 			}
 

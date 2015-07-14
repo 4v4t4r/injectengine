@@ -20,7 +20,7 @@
 					<?php elseif ( $team['Help']['status'] == 1 ): ?>
 
 					<p style="font-size:100px; color: red;">&#9786;</p>
-					<p>Requested <?php echo $this->Time->timeAgoInWords($team['Help']['requested_time']); ?></p>
+					<p>Requested <?php echo $this->Time->timeAgoInWords($team['Help']['time_requested']); ?></p>
 
 					<?php elseif ( $team['Help']['status'] == 2): ?>
 
@@ -33,17 +33,6 @@
 
 					<?php endif; ?>
 				</div>
-				<!--
-				<div class="col-sm-4 text-center">
-					<p>Team Members</p>
-
-					<ul class="list-group">
-						<?php foreach ( $team['User'] AS $user ): ?>
-						<li class="list-group-item"><?php echo $user['username']; ?></li>
-						<?php endforeach; ?>
-					</ul>
-				</div>
-				-->
 				<div class="col-sm-8 text-center">
 					<p>Team Health</p>
 

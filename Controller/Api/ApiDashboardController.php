@@ -4,17 +4,15 @@ App::uses('ApiAppController', 'Controller');
 class ApiDashboardController extends ApiAppController {
 	public $uses = array('Team', 'Inject', 'RequestedCheck', 'CompletedInject', 'Help', 'Log', 'UsedHint');
 
-	const BLUE_TEAM_GID = 2;
-
 	public function getTeamsStatus($teams=false) {
 		$conditions = array(
 			'Team.group_id' => self::BLUE_TEAM_GID,
 		);
 
 		if ( $teams === false ) {
-			$template = 'api_get_teams_status_overview';
+			$template = 'get_teams_status_overview';
 		} else {
-			$template = 'api_get_teams_status_filtered';
+			$template = 'get_teams_status_filtered';
 
 			$teams = explode(',', $teams);
 
@@ -36,7 +34,7 @@ class ApiDashboardController extends ApiAppController {
 					'type' => 'LEFT',
 					'conditions' => array(
 						'Help.requested_team_id = Team.id',
-						'Help.status' => array(1, 2),
+						'Help.status' => array(self::HELP_STATUS_NEW, self::HELP_STATUS_ACK),
 					),
 				),
 				array(

@@ -46,9 +46,26 @@ class AppController extends Controller {
 	protected $dashboard_access = false;
 	protected $teampanel_access = false;
 
+	// Check Status
+	const CHECK_STATUS_NEW      = 0;
+	const CHECK_STATUS_REJECTED = 1;
+	const CHECK_STATUS_ACCEPTED = 2;
+
+	// Help Status
+	const HELP_STATUS_NEW = 1;
+	const HELP_STATUS_ACK = 2;
+	const HELP_STATUS_FIN = 3;
+
+	// Inject Types
+	const INJECT_TYPE_NOTHING = 0;
+	const INJECT_TYPE_FLAG    = 1;
+	const INJECT_TYPE_SUBMIT  = 2;
+	const INJECT_TYPE_MANUAL  = 3;
+
 	// Config
 	const REFRESH_INTERVAL = (60*5); // 5 minutes
 	const SESSION_TIMEOUT  = (60*30); // 30 minutes
+	const BLUE_TEAM_GID    = 2;
 
 	public function beforeFilter() {
 		parent::beforeFilter();
