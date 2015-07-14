@@ -207,6 +207,11 @@ class AppSchema extends CakeSchema {
 			'type' => 'string',
 			'null' => false,
 		),
+		'time' => array(
+			'type' => 'integer',
+			'length' => 10,
+			'null' => false,
+		),
 		'ip_address' => array(
 			'type' => 'string',
 			'length' => 15,
