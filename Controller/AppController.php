@@ -91,16 +91,12 @@ class AppController extends Controller {
 		$this->teampanel_access = $this->getPermission('teampanel_access');
 
 		// Git version (because it looks cool)
-		if ( Cache::read('version', 'short') == false ) {
-			exec('git describe --always', $mini_hash);
-			exec('git log -1', $line);
+		exec('git describe --tags --always', $mini_hash);
+		exec('git log -1', $line);
 
-			Cache::write('version', 'v1-'.trim($mini_hash[0]), 'short');
-			Cache::write('version_long', str_replace('commit ','', $line[0]), 'short');
-		}
 		
-		$this->set('version', Cache::read('version', 'short'));
-		$this->set('version_long', Cache::read('version_long', 'short'));
+		$this->set('version', trim($mini_hash[0]));
+		$this->set('version_long', str_replace('commit ','', $line[0]));
 
 		// Set template information
 		$this->set('userinfo', $this->userinfo);
