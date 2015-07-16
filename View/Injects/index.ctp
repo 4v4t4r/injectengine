@@ -13,10 +13,6 @@ $this->Inject->setup($injects);
 		foreach ( $injects AS $inject ) {
 			if ( !$this->Inject->canShow($inject) ) continue;
 
-			$completed_inject = $this->Inject->completed($inject);;
-			$expired_inject = (!$completed_inject && $this->Inject->expired($inject));
-			$check_requested = $this->Inject->checkRequested($inject);
-
 			echo $this->element(
 				'injects/'.$this->Inject->getElementNameFromType($inject['Inject']['type']),
 				compact('inject')
