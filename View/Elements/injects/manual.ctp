@@ -13,13 +13,13 @@ $this->start('inject_submit');
 	<div class="col-sm-2">
 		<button 
 			id="inject<?php echo $inject['Inject']['id']; ?>-requestCheckBtn"
-			class="btn btn-primary<?php echo ($this->Inject->completedOrExpired($inject) OR $check_requested) ? ' disabled' : ''; ?>" 
+			class="btn btn-primary<?php echo ($this->Inject->completedOrExpired($inject) OR $this->Inject->checkRequested($inject)) ? ' disabled' : ''; ?>" 
 			data-toggle="modal" 
 			data-target="#manualCheckModal" 
 			data-inject-id="<?php echo $inject['Inject']['id']; ?>"
 			data-inject-name="<?php echo $inject['Inject']['title']; ?>" 
 		>
-			<?php echo $check_requested ? 'Check Requested' : 'Request Check'; ?>
+			<?php echo $this->Inject->checkRequested($inject) ? 'Check Requested' : 'Request Check'; ?>
 		</button>
 	</div>
 </div>
