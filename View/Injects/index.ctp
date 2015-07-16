@@ -1,55 +1,7 @@
 <?php
-/*
- * I am so sorry, this page will be *extremely* messy.
- * I promised myself that I would make it nicer in the future, but
- * you know how that works.....
- *
- * .....sorry
- */
+echo $this->Html->script('injectengine', array('inline' => false));
 
-// Helper functions for the page
-$injectCompleted = function($dependency_id) use($injects) {
-	foreach ( $injects AS $inject ) {
-		if ( $inject['Inject']['id'] != $dependency_id ) continue;
-
-		return $inject['CompletedInject']['id'] !== null;
-	}
-
-	return false;
-};
-
-$getInjectName = function($inject_id) use($injects) {
-	foreach ( $injects AS $inject ) {
-		if ( $inject['Inject']['id'] != $inject_id ) continue;
-
-		return $inject['Inject']['title'];
-	}
-
-	return 'Unknown';
-};
-
-$getElementNameFromType = function($type_id) {
-	switch ( $type_id ) {
-		case 1:
-			return 'flag';
-		break;
-
-		case 2;
-			return 'response';
-		break;
-
-		case 3:
-			return 'manual';
-		break;
-
-		default:
-			return 'none';
-		break;
-	}
-};
-
-// Scripts for the page
-echo $this->Html->script('injectengine');
+$this->Inject->setup($injects);
 ?>
 
 <h2>Injects</h2>
@@ -59,19 +11,15 @@ echo $this->Html->script('injectengine');
 
 	<?php 
 		foreach ( $injects AS $inject ) {
-			// Did the inject start?
-			if ( $inject['Inject']['time_start'] > 0 && $inject['Inject']['time_start'] > time() ) continue;
+			if ( !$this->Inject->canShow($inject) ) continue;
 
-			// Do we have a dependency/was it started?
-			if ( $inject['Inject']['dependency'] != 0 && !$injectCompleted($inject['Inject']['dependency']) ) continue;
-
-			$completed_inject = ($inject['CompletedInject']['id'] !== null);
-			$expired_inject = (!$completed_inject && $inject['Inject']['time_end'] > 0 && $inject['Inject']['time_end'] < time());
-			$check_requested = ($inject['RequestedCheck']['id'] !== null);
+			$completed_inject = $this->Inject->completed($inject);;
+			$expired_inject = (!$completed_inject && $this->Inject->expired($inject));
+			$check_requested = $this->Inject->checkRequested($inject);
 
 			echo $this->element(
-				'injects/'.$getElementNameFromType($inject['Inject']['type']),
-				compact('completed_inject', 'expired_inject', 'check_requested', 'inject')
+				'injects/'.$this->Inject->getElementNameFromType($inject['Inject']['type']),
+				compact('inject')
 			);
 		}
 	?>

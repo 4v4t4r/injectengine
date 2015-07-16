@@ -3,6 +3,7 @@ App::uses('AppController', 'Controller');
 
 class InjectsController extends AppController {
 	public $uses = array('Team', 'User', 'Hint', 'Inject', 'CompletedInject', 'RequestedCheck', 'UsedHint', 'Group', 'Help');
+	public $helpers = array('Inject');
 
 	public function beforeFilter() {
 		parent::beforeFilter();

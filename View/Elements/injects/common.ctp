@@ -1,17 +1,17 @@
-<div class="panel <?php echo ($completed_inject) ? 'panel-success' : ($expired_inject ? 'panel-warning' : 'panel-primary'); ?>">
+<div class="panel <?php echo $this->Inject->getPanelClass($inject); ?>">
 	<div class="panel-heading">
 		<h4 class="panel-title">
 			<a 
 				data-toggle="collapse" 
 				href="#inject<?php echo $inject['Inject']['id']; ?>" 
-				class="<?php echo ($completed_inject OR $expired_inject) ? 'collapsed' : ''; ?>"
+				class="<?php echo $this->Inject->completedOrExpired($inject) ? 'collapsed' : ''; ?>"
 			>
 				<?php echo $inject['Inject']['title']; ?>
 			</a>
 		</h4>
 	</div>
 
-	<div id="inject<?php echo $inject['Inject']['id']; ?>" class="panel-collapse collapse<?php echo ($completed_inject OR $expired_inject) ? '' : ' in'; ?>">
+	<div id="inject<?php echo $inject['Inject']['id']; ?>" class="panel-collapse collapse<?php echo $this->Inject->completedOrExpired($inject) ? '' : ' in'; ?>">
 		<div class="panel-body">
 			<table class="table">
 				<tbody>
@@ -21,11 +21,11 @@
 						</td>
 
 						<td class="text-right text-nowrap">
-							<?php if ( $completed_inject ): ?>
+							<?php if ( $this->Inject->completed($inject) ): ?>
 							
 							<p><button class="btn btn-xs btn-success">COMPLETED</button></p>
 
-							<?php elseif ( $expired_inject ): ?>
+							<?php elseif ( $this->Inject->expired($inject) ): ?>
 
 							<p><button class="btn btn-xs btn-danger">EXPIRED</button></p>
 
@@ -77,7 +77,7 @@
 			<p><strong>Inject End</strong>: <?php echo date('n/j \a\t g:iA', $inject['Inject']['time_end']); ?></p>
 			<?php endif; ?>
 			
-			<?php if ( $completed_inject ): ?>
+			<?php if ( $this->Inject->completed($inject) ): ?>
 			<p><strong>Completed By</strong>: <?php echo $inject['User']['username']; ?> at <?php echo date('g:iA', $inject['CompletedInject']['time']); ?></p>
 			<?php endif; ?>
 		</div>

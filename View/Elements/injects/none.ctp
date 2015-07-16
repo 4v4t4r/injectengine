@@ -1,5 +1,5 @@
 <?php
-$this->set(compact('completed_inject', 'expired_inject', 'check_requested', 'inject'));
+$this->set(compact('inject'));
 
 $this->extend('injects/common');
 $this->assign('inject_submit', '');
