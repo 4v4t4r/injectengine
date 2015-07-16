@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('timeline'); ?>
+<?php echo $this->Html->css('timeline', array('inline' => false)); ?>
 
 <h2>Team Panel</h2>
 <h4><?php echo $teaminfo['name']; ?></h4>

@@ -1,13 +1,13 @@
 <?php
 $items_in_row = 0;
 
-echo $this->Html->css('bootstrap3-wysihtml5.min');
-echo $this->Html->css('bootstrap-datetimepicker.min');
+echo $this->Html->css('bootstrap3-wysihtml5.min', array('inline' => false));
+echo $this->Html->css('bootstrap-datetimepicker.min', array('inline' => false));
 
-echo $this->Html->script('bootstrap3-wysihtml5.all.min');
-echo $this->Html->script('moment.min');
-echo $this->Html->script('bootstrap-datetimepicker.min');
-echo $this->Html->script('backend.hint');
+echo $this->Html->script('bootstrap3-wysihtml5.all.min', array('inline' => false));
+echo $this->Html->script('moment.min', array('inline' => false));
+echo $this->Html->script('bootstrap-datetimepicker.min', array('inline' => false));
+echo $this->Html->script('backend.hint', array('inline' => false));
 ?>
 
 <h2>Backend Panel - Inject Manager</h2>

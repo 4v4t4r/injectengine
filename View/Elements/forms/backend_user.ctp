@@ -1,7 +1,7 @@
-<?php echo $this->Html->css('bootstrap-datetimepicker.min'); ?>
+<?php echo $this->Html->css('bootstrap-datetimepicker.min', array('inline' => false)); ?>
 
-<?php echo $this->Html->script('moment.min'); ?>
-<?php echo $this->Html->script('bootstrap-datetimepicker.min'); ?>
+<?php echo $this->Html->script('moment.min', array('inline' => false)); ?>
+<?php echo $this->Html->script('bootstrap-datetimepicker.min', array('inline' => false)); ?>
 
 <form method="post" class="form-horizontal">
 	<div class="form-group">

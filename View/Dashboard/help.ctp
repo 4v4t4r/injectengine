@@ -1,4 +1,4 @@
-<?php echo $this->Html->script('dashboard.help'); ?>
+<?php echo $this->Html->script('dashboard.help', array('inline' => false)); ?>
 
 <h2>Dashboard - Respond to Help Request</h2>
 <h4><?php echo $teaminfo['name']; ?> (<?php echo $groupinfo['name']; ?>)</h4>

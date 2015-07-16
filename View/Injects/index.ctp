@@ -32,88 +32,60 @@ $this->Inject->setup($injects);
 
 <?php endif; ?>
 
-<div class="modal fade" id="hintModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Request A Hint</h4>
-			</div>
+<?php
+	echo $this->element('modals/general', array(
+		'id'     => 'hintModal',
+		'title'  => 'Request A Hint',
 
-			<div class="modal-body">
-				<em>Loading...</em>
-			</div>
+		'body'   => '<em>Loading...</em>',
+		
+		'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
+	));
+?>
 
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
+<?php
+	echo $this->element('modals/general', array(
+		'id'     => 'helpModal',
+		'title'  => 'Request Help',
 
-<div class="modal fade" id="helpModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Request Help</h4>
-			</div>
+		'body'   => '<p>You are requesting help for <span id="helpModal-injectname"></span>. Please note the following information:</p>'.
+				'<p>What we <strong>can</strong> do:</p>'.
+				'<ul>'.
+				'	<li>Clarify the inject, or taken hint(s)</li>'.
+				'	<li>Tell you if something is supposed to happen</li>'.
+				'	<li>Fix something <strong>we</strong> manage, that is broken</li>'.
+				'</ul>'.
+				'<p>What we <strong>can not</strong> do:</p>'.
+				'<ul>'.
+				'	<li>Give hints, other than ones provided</li>'.
+				'	<li>Give you answers</li>'.
+				'</ul>',
+		
+		'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'.
+				'<button type="button" class="btn btn-primary" id="helpModal-yesRequest">Yes, Request Help</button>',
+	));
+?>
 
-			<div class="modal-body">
-				<p>You are requesting help for <span id="helpModal-injectname"></span>. Please note the following information:</p>
+<?php
+	echo $this->element('modals/general', array(
+		'id'     => 'manualCheckModal',
+		'title'  => 'Before we continue...',
 
-				<p>What we <strong>can</strong> do:</p>
-				<ul>
-					<li>Clarify the inject, or taken hint(s)</li>
-					<li>Tell you if something is supposed to happen</li>
-					<li>Fix something <strong>we</strong> manage, that is broken</li>
-				</ul>
-
-				<p>What we <strong>can not</strong> do:</p>
-				<ul>
-					<li>Give hints, other than ones provided</li>
-					<li>Give you answers</li>
-				</ul>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="helpModal-yesRequest">Yes, Request Help</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="manualCheckModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Before we continue...</h4>
-			</div>
-
-			<div class="modal-body">
-				<p>You are requesting a check for <span id="manualCheckModal-injectname"></span>. Please note the following information:</p>
-
-				<p>When to use this:</p>
-				<ul>
-					<li>You believe that you have <strong>completely</strong> fulfilled the inject</li>
-					<li>You are ready to show proof when requested</li>
-				</ul>
-
-				<p>When <strong>not</strong> to use this:</p>
-				<ul>
-					<li>You are unsure what this inject means - use the "<strong>Request Help</strong>" button.</li>
-				</ul>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="manualCheckModal-yesRequest">Yes, Request A Check</button>
-			</div>
-		</div>
-	</div>
-</div>
+		'body'   => '<p>You are requesting a check for <span id="manualCheckModal-injectname"></span>. Please note the following information:</p>'.
+				'<p>When to use this:</p>'.
+				'<ul>'.
+				'	<li>You believe that you have <strong>completely</strong> fulfilled the inject</li>'.
+				'	<li>You are ready to show proof when requested</li>'.
+				'</ul>'.
+				'<p>When <strong>not</strong> to use this:</p>'.
+				'<ul>'.
+				'	<li>You are unsure what this inject means - use the "<strong>Request Help</strong>" button.</li>'.
+				'</ul>',
+		
+		'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'.
+				'<button type="button" class="btn btn-primary" id="manualCheckModal-yesRequest">Yes, Request Help</button>',
+	));
+?>
 
 <script>
 $(document).ready(function() {

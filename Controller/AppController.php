@@ -127,24 +127,12 @@ class AppController extends Controller {
 	public function afterFilter() {
 		parent::afterFilter();
 
-		if ( !$this->backend_access && false ) {
-			// Clean the HTML
-			$buffer = $this->response->body();
+		// Output compression on all requests
+		$parser = \WyriHaximus\HtmlCompress\Factory::construct();
+		$compressedHtml = $parser->compress($this->response->body());
 
-			$search = array(
-				'/\>[^\S ]+/s',  // strip whitespaces after tags, except space
-				'/[^\S ]+\</s',  // strip whitespaces before tags, except space
-				'/(\s)+/s'       // shorten multiple whitespace sequences
-			);
-
-			$replace = array(
-				'>',
-				'<',
-				'\\1'
-			);
-
-			$this->response->body(preg_replace($search, $replace, $buffer));
-		}
+		$this->response->compress();
+		$this->response->body($compressedHtml);
 	}
 
 	protected function requireAuthenticated($redirect_to='/user/login') {

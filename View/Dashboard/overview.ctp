@@ -1,5 +1,5 @@
-<?php echo $this->Html->script('dashboard.overview'); ?>
-<?php echo $this->Html->script('//www.google.com/jsapi'); ?>
+<?php echo $this->Html->script('dashboard.overview', array('inline' => false)); ?>
+<?php echo $this->Html->script('//www.google.com/jsapi', array('inline' => false)); ?>
 
 <h2>Dashboard - Overview</h2>
 <h4><?php echo $teaminfo['name']; ?> (<?php echo $groupinfo['name']; ?>)</h4>

@@ -1,5 +1,5 @@
-<?php echo $this->Html->css('timeline'); ?>
-<?php echo $this->Html->script('dashboard.timeline'); ?>
+<?php echo $this->Html->css('timeline', array('inline' => false)); ?>
+<?php echo $this->Html->script('dashboard.timeline', array('inline' => false)); ?>
 
 <h2>Dashboard - Inject Completion Timeline</h2>
 <h4><?php echo $teaminfo['name']; ?> (<?php echo $groupinfo['name']; ?>)</h4>

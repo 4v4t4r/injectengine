@@ -1,9 +1,9 @@
-<?php echo $this->Html->css('bootstrap3-wysihtml5.min'); ?>
-<?php echo $this->Html->css('bootstrap-datetimepicker.min'); ?>
+<?php echo $this->Html->css('bootstrap3-wysihtml5.min', array('inline' => false)); ?>
+<?php echo $this->Html->css('bootstrap-datetimepicker.min', array('inline' => false)); ?>
 
-<?php echo $this->Html->script('bootstrap3-wysihtml5.all.min'); ?>
-<?php echo $this->Html->script('moment.min'); ?>
-<?php echo $this->Html->script('bootstrap-datetimepicker.min'); ?>
+<?php echo $this->Html->script('bootstrap3-wysihtml5.all.min', array('inline' => false)); ?>
+<?php echo $this->Html->script('moment.min', array('inline' => false)); ?>
+<?php echo $this->Html->script('bootstrap-datetimepicker.min', array('inline' => false)); ?>
 
 <form method="post" class="form-horizontal">
 	<div class="form-group">

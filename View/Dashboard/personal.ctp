@@ -3,8 +3,8 @@ $teams_arr  = array();
 $teams_id   = array();
 foreach ( $teams AS $team ) { $teams_arr[] = $team['Team']['name']; $teams_id[] = $team['Team']['id']; }
 
-echo $this->Html->css('timeline');
-echo $this->Html->script('dashboard.personal');
+echo $this->Html->css('timeline', array('inline' => false));
+echo $this->Html->script('dashboard.personal', array('inline' => false));
 ?>
 
 <h2>Dashboard - <?php echo implode(', ', $teams_arr); ?></h2>

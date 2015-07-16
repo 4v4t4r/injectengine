@@ -1,7 +1,7 @@
 <?php
 $items_in_row = 0;
 
-echo $this->Html->script('backend.group');
+echo $this->Html->script('backend.group', array('inline' => false));
 ?>
 
 <h2>Backend Panel - User Manager</h2>

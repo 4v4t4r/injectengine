@@ -1,7 +1,8 @@
 {
 	"name": "injectengine",
 	"require": {
-		"cakephp/cakephp": "2.7.*"
+		"cakephp/cakephp": "2.7.*",
+		"wyrihaximus/html-compress": "1.0.*"
 	},
 	"config": {
 		"vendor-dir": "Vendor/"
