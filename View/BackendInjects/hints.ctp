@@ -13,7 +13,7 @@ echo $this->Html->script('backend.hint');
 <h2>Backend Panel - Inject Manager</h2>
 <h4><?php echo $teaminfo['name']; ?> (<?php echo $groupinfo['name']; ?>)</h4>
 
-<?php echo $this->element('backend_injects_navbar', array('at_hints' => true)); ?>
+<?php echo $this->element('navbars/backend_injects', array('at_hints' => true)); ?>
 
 <p>&nbsp;</p>
 
@@ -74,7 +74,7 @@ echo $this->Html->script('backend.hint');
 				</div>
 				<div class="modal-body">
 					<span class="hidden" id="hintAdd-id"></span>
-					<?php echo $this->element('backend_hint_form', array('prefix' => 'add')); ?>
+					<?php echo $this->element('forms/backend_hint', array('prefix' => 'add')); ?>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -95,7 +95,7 @@ echo $this->Html->script('backend.hint');
 				</div>
 				<div class="modal-body">
 					<span class="hidden" id="hintEdit-id"></span>
-					<?php echo $this->element('backend_hint_form', array('prefix' => 'edit')); ?>
+					<?php echo $this->element('forms/backend_hint', array('prefix' => 'edit')); ?>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

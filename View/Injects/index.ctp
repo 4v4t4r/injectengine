@@ -28,6 +28,26 @@ $getInjectName = function($inject_id) use($injects) {
 	return 'Unknown';
 };
 
+$getElementNameFromType = function($type_id) {
+	switch ( $type_id ) {
+		case 1:
+			return 'flag';
+		break;
+
+		case 2;
+			return 'response';
+		break;
+
+		case 3:
+			return 'manual';
+		break;
+
+		default:
+			return 'none';
+		break;
+	}
+};
+
 // Scripts for the page
 echo $this->Html->script('injectengine');
 ?>
@@ -36,168 +56,36 @@ echo $this->Html->script('injectengine');
 
 <?php if ( !empty($injects) ): ?>
 <div class="panel-group" id="accordion">
-	<?php foreach ( $injects AS $inject ): ?>
-	
-	<?php
-		// Did the inject start?
-		if ( $inject['Inject']['time_start'] > 0 && $inject['Inject']['time_start'] > time() ) continue;
 
-		// Do we have a dependency/was it started?
-		if ( $inject['Inject']['dependency'] != 0 && !$injectCompleted($inject['Inject']['dependency']) ) continue;
+	<?php 
+		foreach ( $injects AS $inject ) {
+			// Did the inject start?
+			if ( $inject['Inject']['time_start'] > 0 && $inject['Inject']['time_start'] > time() ) continue;
 
-		$completed_inject = ($inject['CompletedInject']['id'] !== null);
-		$expired_inject = (!$completed_inject && $inject['Inject']['time_end'] > 0 && $inject['Inject']['time_end'] < time());
-		$check_requested = ($inject['RequestedCheck']['id'] !== null);
+			// Do we have a dependency/was it started?
+			if ( $inject['Inject']['dependency'] != 0 && !$injectCompleted($inject['Inject']['dependency']) ) continue;
+
+			$completed_inject = ($inject['CompletedInject']['id'] !== null);
+			$expired_inject = (!$completed_inject && $inject['Inject']['time_end'] > 0 && $inject['Inject']['time_end'] < time());
+			$check_requested = ($inject['RequestedCheck']['id'] !== null);
+
+			echo $this->element(
+				'injects/'.$getElementNameFromType($inject['Inject']['type']),
+				compact('completed_inject', 'expired_inject', 'check_requested', 'inject')
+			);
+		}
 	?>
-	
-	<div class="panel <?php echo ($completed_inject) ? 'panel-success' : ($expired_inject ? 'panel-warning' : 'panel-primary'); ?>">
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a 
-					data-toggle="collapse" 
-					href="#inject<?php echo $inject['Inject']['id']; ?>" 
-					class="<?php echo ($completed_inject OR $expired_inject) ? 'collapsed' : ''; ?>"
-				>
-					<?php echo $inject['Inject']['title']; ?>
-				</a>
-			</h4>
-		</div>
 
-		<div id="inject<?php echo $inject['Inject']['id']; ?>" class="panel-collapse collapse<?php echo ($completed_inject OR $expired_inject) ? '' : ' in'; ?>">
-			<div class="panel-body">
-				<table class="table">
-					<tbody>
-						<tr>
-							<td>
-								<?php echo $inject['Inject']['description']; ?>
-							</td>
-							<td class="text-right text-nowrap">
-								<?php if ( $completed_inject ): ?>
-								
-								<p><button class="btn btn-xs btn-success">COMPLETED</button></p>
-
-								<?php elseif ( $expired_inject ): ?>
-
-								<p><button class="btn btn-xs btn-danger">EXPIRED</button></p>
-
-								<?php else: ?>
-
-								<?php if ( $inject['Inject']['hints_enabled'] ): ?>
-								<p>
-									<button 
-										class="btn btn-xs btn-info" 
-										data-toggle="modal" 
-										data-target="#hintModal" 
-										data-inject-id="<?php echo $inject['Inject']['id']; ?>"
-									>
-										HINTS AVAILABLE
-									</button>
-								</p>
-								<?php endif; ?>
-
-								<p>
-									<button 
-										class="btn btn-xs btn-warning" 
-										data-toggle="modal" 
-										data-target="#helpModal" 
-										data-inject-id="<?php echo $inject['Inject']['id']; ?>"
-										data-inject-name="<?php echo $inject['Inject']['title']; ?>"
-									>
-										REQUEST HELP
-									</button>
-								</p>
-
-								<?php endif; ?>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<?php if ( $inject['Inject']['type'] == 1 ): ?>
-								
-								<form action="#" class="form-horizontal">
-									<div class="form-group">
-										<label for="inject<?php echo $inject['Inject']['id']; ?>-flag" class="col-sm-1 control-label">Flag</label>
-										<div class="col-sm-9">
-											<input 
-												type="<?php echo ($completed_inject OR $expired_inject) ? 'password' : 'text'; ?>" 
-												class="form-control inject-flag" 
-												id="inject<?php echo $inject['Inject']['id']; ?>-flag" 
-												placeholder="Enter Key Here"
-												data-inject-id="<?php echo $inject['Inject']['id']; ?>" 
-												<?php echo ($completed_inject OR $expired_inject) ? 'disabled="disabled" value="good_try_but_no_password_here"' : ''; ?>
-											>
-										</div>
-										<div class="col-sm-2">
-											<button type="submit" class="btn btn-primary"<?php echo ($completed_inject OR $expired_inject) ? ' disabled="disabled"' : ''; ?>>
-												Submit
-											</button>
-										</div>
-									</div>
-								</form>
-								<div class="alert alert-danger text-center hidden" id="inject<?php echo $inject['Inject']['id']; ?>-invalid">
-									<strong>Invalid Password!</strong> No guessing!
-								</div>
-								
-								<?php elseif ( $inject['Inject']['type'] == 2 ): ?>
-								
-								<p><em>Inject Type: Submit</em></p>
-
-								<?php elseif ( $inject['Inject']['type'] == 3 ): ?>
-								
-								<div class="row">
-									<div class="col-sm-9">
-										<p class="form-control-static">This inject must be manually checked by a White Team member.</p>
-									</div>
-									<div class="col-sm-2">
-										<button 
-											id="inject<?php echo $inject['Inject']['id']; ?>-requestCheckBtn"
-											class="btn btn-primary<?php echo ($completed_inject OR $expired_inject OR $check_requested) ? ' disabled' : ''; ?>" 
-											data-toggle="modal" 
-											data-target="#manualCheckModal" 
-											data-inject-id="<?php echo $inject['Inject']['id']; ?>"
-											data-inject-name="<?php echo $inject['Inject']['title']; ?>" 
-										>
-											<?php echo $check_requested ? 'Check Requested' : 'Request Check'; ?>
-										</button>
-									</div>
-								</div>
-
-								<?php else: ?>
-								
-								<p><em>Unknown Inject Type</em> - Please contact White Team</p>
-								
-								<?php endif; ?>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<div class="panel-footer">
-				<?php if ( $inject['Inject']['time_start'] > 0 ): ?>
-				<p><strong>Inject Start</strong>: <?php echo date('n/j \a\t g:iA', $inject['Inject']['time_start']); ?></p>
-				<?php endif; ?>
-
-				<?php if ( $inject['Inject']['time_end'] > 0 ): ?>
-				<p><strong>Inject End</strong>: <?php echo date('n/j \a\t g:iA', $inject['Inject']['time_end']); ?></p>
-				<?php endif; ?>
-				
-				<?php if ( $completed_inject ): ?>
-				<p><strong>Completed By</strong>: <?php echo $inject['User']['username']; ?> at <?php echo date('g:iA', $inject['CompletedInject']['time']); ?></p>
-				<?php endif; ?>
-			</div>
-		</div>
-	</div>
-	<?php endforeach; ?>
 </div>
-<?php endif; ?>
 
-<?php if ( empty($injects) ): ?>
+<?php else: ?>
+
 <div class="panel panel-default">
 	<div class="panel-body">
 		<p>No injects found.</p>
 	</div>
 </div>
+
 <?php endif; ?>
 
 <div class="modal fade" id="hintModal" tabindex="-1" role="dialog">

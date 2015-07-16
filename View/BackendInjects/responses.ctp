@@ -1,7 +1,7 @@
 <h2>Backend Panel - Inject Manager</h2>
 <h4><?php echo $teaminfo['name']; ?> (<?php echo $groupinfo['name']; ?>)</h4>
 
-<?php echo $this->element('backend_injects_navbar', array('at_responses' => true)); ?>
+<?php echo $this->element('navbars/backend_injects', array('at_responses' => true)); ?>
 
 <p>&nbsp;</p>
 

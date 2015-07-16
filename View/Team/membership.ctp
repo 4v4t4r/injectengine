@@ -1,7 +1,7 @@
 <h2>Team Panel</h2>
 <h4><?php echo $teaminfo['name']; ?></h4>
 
-<?php echo $this->element('team_navbar', array('at_membership' => true)); ?>
+<?php echo $this->element('navbars/team', array('at_membership' => true)); ?>
 
 <p>&nbsp;</p>
 
