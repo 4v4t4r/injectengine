@@ -64,47 +64,31 @@ echo $this->Html->script('backend.hint', array('inline' => false));
 </div>
 <?php endif; ?>
 
-<div class="modal fade" id="hintAdd">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form class="form-horizontal" id="hintAdd-form" method="post">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Add Hint To <span id="hintAdd-injectname">...</span></h4>
-				</div>
-				<div class="modal-body">
-					<span class="hidden" id="hintAdd-id"></span>
-					<?php echo $this->element('forms/backend_hint', array('prefix' => 'add')); ?>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary" id="hintAdd-addBtn">Add Hint!</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+<?php
+	echo $this->element('modals/form', array(
+		'id'     => 'hintAdd',
+		'title'  => 'Add Hint To <span id="hintAdd-injectname">...</span>',
 
-<div class="modal fade" id="hintEdit">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form class="form-horizontal" id="hintEdit-form" method="post">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Editing Hint #<span id="hintEdit-number">...</span> For <span id="hintEdit-injectname">...</span></h4>
-				</div>
-				<div class="modal-body">
-					<span class="hidden" id="hintEdit-id"></span>
-					<?php echo $this->element('forms/backend_hint', array('prefix' => 'edit')); ?>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary" id="hintEdit-addBtn">Edit Hint!</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+		'body'   => '<span class="hidden" id="hintAdd-id"></span>'.
+					$this->element('forms/backend_hint', array('prefix' => 'add')),
+
+		'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'.
+					'<button type="submit" class="btn btn-primary" id="hintAdd-addBtn">Add Hint!</button>',
+	));
+?>
+
+<?php
+	echo $this->element('modals/form', array(
+		'id'     => 'hintEdit',
+		'title'  => 'Editing Hint #<span id="hintEdit-number">...</span> For <span id="hintEdit-injectname">...</span>',
+
+		'body'   => '<span class="hidden" id="hintEdit-id"></span>'.
+					$this->element('forms/backend_hint', array('prefix' => 'edit')),
+
+		'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'.
+					'<button type="submit" class="btn btn-primary" id="hintEdit-addBtn">Edit Hint!</button>',
+	));
+?>
 
 <script>
 $(document).ready(function() {

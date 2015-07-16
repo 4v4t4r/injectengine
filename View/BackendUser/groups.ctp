@@ -106,35 +106,26 @@ echo $this->Html->script('backend.group', array('inline' => false));
 </div>
 <?php endif; ?>
 
-<div class="modal fade" id="teamAdd">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form class="form-horizontal" id="teamAdd-form" method="post">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Add Team To <span id="teamAdd-groupname">...</span></h4>
-				</div>
-				<div class="modal-body">
-					<input type="hidden" name="op" value="1" />
-					<input type="hidden" name="gid" id="teamAdd-gid" value="" />
+<?php
+	echo $this->element('modals/form', array(
+		'id'     => 'teamAdd',
+		'title'  => 'Add Team To <span id="teamAdd-groupname">...</span>',
+		
+		'body'   => '<input type="hidden" name="op" value="1" />'.
+					'<input type="hidden" name="gid" id="teamAdd-gid" value="" />'.
+					'<div class="form-group">'.
+					'	<label for="teamAdd-select" class="col-sm-2 control-label">Team</label>'.
+					'	<div class="col-sm-10">'.
+					'		<select class="form-control" name="tid" id="teamAdd-select">'.
+					'			<option value="-1">Loading...</option>'.
+					'		</select>'.
+					'	</div>'.
+					'</div>',
 
-					<div class="form-group">
-						<label for="team" class="col-sm-2 control-label">Team</label>
-						<div class="col-sm-10">
-							<select class="form-control" name="tid" id="teamAdd-select">
-								<option value="-1">Loading...</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary" id="teamAdd-addBtn">Add Team!</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+		'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'.
+					'<button type="submit" class="btn btn-primary" id="teamAdd-addBtn">Add Team!</button>',
+	));
+?>
 
 <script>
 $(document).ready(function() {

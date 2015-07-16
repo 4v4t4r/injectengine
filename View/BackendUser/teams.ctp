@@ -96,36 +96,26 @@ echo $this->Html->script('backend.team', array('inline' => false));
 </div>
 <?php endif; ?>
 
-<div class="modal fade" id="userAdd">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form class="form-horizontal" id="userAdd-form" method="post">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Add User To <span id="userAdd-teamname">...</span></h4>
-				</div>
-				<div class="modal-body">
-					<input type="hidden" name="op" value="1" />
-					<input type="hidden" id="userAdd-tid" name="tid" value="" />
+<?php
+	echo $this->element('modals/form', array(
+		'id'     => 'userAdd',
+		'title'  => 'Add User To <span id="userAdd-teamname">...</span>',
+		
+		'body'   => '<input type="hidden" name="op" value="1" />'.
+					'<input type="hidden" name="tid" id="teamAdd-tid" value="" />'.
+					'<div class="form-group">'.
+					'	<label for="userAdd-select" class="col-sm-2 control-label">Username</label>'.
+					'	<div class="col-sm-10">'.
+					'		<select class="form-control" name="tid" id="userAdd-select">'.
+					'			<option value="-1">Loading...</option>'.
+					'		</select>'.
+					'	</div>'.
+					'</div>',
 
-					<div class="form-group">
-						<label for="team" class="col-sm-2 control-label">Username</label>
-						<div class="col-sm-10">
-							<select class="form-control" name="uid" id="userAdd-select">
-								<option value="-1">Loading...</option>
-							</select>
-						</div>
-					</div>
-					
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary" id="userAdd-addBtn">Add User!</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+		'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'.
+					'<button type="submit" class="btn btn-primary" id="teamAdd-addBtn">Add Team!</button>',
+	));
+?>
 
 <script>
 $(document).ready(function() {
