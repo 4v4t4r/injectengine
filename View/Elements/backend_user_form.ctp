@@ -91,7 +91,7 @@ $(document).ready(function() {
 
 			if ( !$.isNumeric(input.val()) ) {
 				// Not a number. Let's get the date from DTP
-				input.val(dtp.date().unix());
+				input.val(dtp.date().utc().unix());
 			}
 		});
 	});
