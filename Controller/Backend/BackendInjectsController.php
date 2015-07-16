@@ -15,15 +15,19 @@ class BackendInjectsController extends BackendAppController {
 
 		foreach ( $injects AS &$inject ) {
 			switch ( $inject['Inject']['type'] ) {
-				case 1:
+				case self::INJECT_TYPE_NOTHING:
+					$inject['Inject']['type_name'] = 'Nothing';
+				break;
+
+				case self::INJECT_TYPE_FLAG:
 					$inject['Inject']['type_name'] = 'Flag';
 				break;
 
-				case 2:
+				case self::INJECT_TYPE_SUBMIT:
 					$inject['Inject']['type_name'] = 'Submission';
 				break;
 
-				case 3:
+				case self::INJECT_TYPE_MANUAL:
 					$inject['Inject']['type_name'] = 'Manual';
 				break;
 

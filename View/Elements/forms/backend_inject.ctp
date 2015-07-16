@@ -122,6 +122,12 @@
 		<div class="col-sm-9">
 			<div class="radio">
 				<label>
+					<input type="radio" name="type" id="type0" value="0"<?php echo (!empty($inject) && $inject['Inject']['type'] == 0) ? ' checked="checked"' : ''; ?> required="required">
+					Nothing
+				</label>
+			</div>
+			<div class="radio">
+				<label>
 					<input type="radio" name="type" id="type1" value="1"<?php echo (!empty($inject) && $inject['Inject']['type'] == 1) ? ' checked="checked"' : ''; ?> required="required">
 					Flag
 				</label>
@@ -203,8 +209,14 @@ $(document).ready(function() {
 	$('#description').html('<?php echo addslashes($inject['Inject']['description']); ?>');
 	$('#explanation').html('<?php echo addslashes($inject['Inject']['explanation']); ?>');
 
+	<?php if ( $inject['Inject']['time_start'] > 0 ): ?>
 	$('#time_start_datepicker').data('DateTimePicker').date(moment.unix('<?php echo $inject['Inject']['time_start']; ?>'));
+	<?php endif; ?>
+
+	<?php if ( $inject['Inject']['time_end'] > 0 ): ?>
 	$('#time_end_datepicker').data('DateTimePicker').date(moment.unix('<?php echo $inject['Inject']['time_end']; ?>'));
+	<?php endif; ?>
+
 	<?php endif; ?>
 	
 	$('form').submit(function() {
