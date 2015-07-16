@@ -152,6 +152,16 @@ class AppSchema extends CakeSchema {
 			'type' => 'integer',
 			'null' => false,
 		),
+		'time_start' => array(
+			'type' => 'integer',
+			'length' => 10,
+			'null' => false,
+		),
+		'time_end' => array(
+			'type' => 'integer',
+			'length' => 10,
+			'null' => false,
+		),
 		'active' => array(
 			'type' => 'boolean',
 			'default' => false,
