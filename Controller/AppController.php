@@ -33,6 +33,12 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	public $uses = array('Team', 'User', 'Log');
 
+	public $helpers = array(
+		'Form' => array(
+			'className' => 'BootstrapForm',
+		),
+	);
+
 	// User Information
 	protected $userinfo  = array();
 	protected $teaminfo  = array();
