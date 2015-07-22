@@ -2,7 +2,7 @@
 <h4><?php echo $teaminfo['name']; ?> (<?php echo $groupinfo['name']; ?>)</h4>
 
 <?php if ( $filtering ): ?>
-<div class="well">
+<div class="alert alert-info">
 	Filtering for logs of type "<?php echo $filtering_type; ?>". Click <?php echo $this->Html->link('here', '/backend/logs'); ?> to remove.
 </div>
 <?php endif; ?>
@@ -26,7 +26,7 @@
 			<td><?php echo $log['Log']['id']; ?></td>
 
 			<?php if ( !$filtering ): ?>
-				<td><?php echo $this->Html->link($log['Log']['type'], '/backend/logs/'.$log['Log']['type']); ?></td>
+				<td><?php echo $this->Html->link($log['Log']['type'], '/backend/logs/filter/'.$log['Log']['type']); ?></td>
 			<?php endif; ?>
 
 			<td><?php echo $log['Log']['text']; ?></td>
