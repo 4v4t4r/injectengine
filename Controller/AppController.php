@@ -32,6 +32,11 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 	public $uses = array('Team', 'User', 'Log');
+	public $components = array(
+		'Session',
+		'Flash' => array(
+			'className' => 'BootstrapFlash',
+		));
 
 	// User Information
 	protected $userinfo  = array();
