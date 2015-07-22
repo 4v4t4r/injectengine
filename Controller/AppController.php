@@ -98,7 +98,6 @@ class AppController extends Controller {
 		// Git version (because it looks cool)
 		exec('git describe --tags --always', $mini_hash);
 		exec('git log -1', $line);
-
 		
 		$this->set('version', trim($mini_hash[0]));
 		$this->set('version_long', str_replace('commit ','', $line[0]));
@@ -113,17 +112,6 @@ class AppController extends Controller {
 		$this->set('emulating', $this->Session->read('User.emulating'));
 		$this->set('competition_name', self::COMPETITION_NAME);
 		$this->set('competition_logo', self::COMPETITION_LOGO);
-
-		// If we're doing a backend request, require backend access
-		if ( isset($this->request->params['backend']) && $this->request->params['backend'] ) {
-			$this->requireBackend();
-			$this->set('at_backendpanel', true);
-		}
-
-		// If we're doing an API request not logged in, kill it.
-		if ( isset($this->request->params['api']) && $this->request->params['api'] && !$this->logged_in ) {
-			return $this->ajaxResponse('Please login', 401);
-		}
 
 		// Extend the session
 		$this->Session->write('Config.time', time()+self::SESSION_TIMEOUT);
