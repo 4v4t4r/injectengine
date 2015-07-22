@@ -100,6 +100,9 @@ class DashboardController extends AppController {
 	public function check($id=false) {
 		if ( $id === false || !is_numeric($id) ) $this->barf();
 
+		$this->RequestedCheck->bindModel(array(
+			'belongsTo' => array('Team', 'Inject'),
+		));
 		$check = $this->RequestedCheck->findById($id);
 
 		if ( empty($check) ) $this->barf();
@@ -137,7 +140,11 @@ class DashboardController extends AppController {
 				break;
 			}
 
-			// Set a flash message - TODO
+			// Log it
+			$this->logMessage('INJECT_CHECK', $this->userinfo['username'].' checked '.$check['Team']['name'].'\'s submission for Inject "'.$check['Inject']['title'].'"')
+
+			// Set a flash message
+			$this->Flash->success('Sucessfully performed check on TID #'.$check['Team']['name']);
 
 			// Redirect!
 			$this->redirect('/dashboard/personal/'.$check['RequestedCheck']['team_id']);

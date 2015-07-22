@@ -188,6 +188,10 @@ class InjectsController extends AppController {
 				// Log it
 				$this->logMessage('INJECT', 'Inject #'.$this->request->data['id'].' was just solved');
 
+				// Set a nice flash message
+				$this->Flash->success('Inject "'.$inject['Inject']['title'].'" has been solved!');
+
+				// This message shouldn't be outputted to the team
 				return $this->ajaxResponse('Correct Flag!');
 			break;
 

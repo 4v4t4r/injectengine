@@ -81,6 +81,7 @@ class BackendInjectsController extends BackendAppController {
 			$this->logMessage('BACKEND_INJECT', 'New inject was just created - #'.$this->Inject->id);
 
 			// Set a nice flash message
+			$this->Flash->success('Inject "'.$this->request->data['title'].'" sucessfully created!');
 
 			// Redirect home
 			$this->redirect('/backend/injects');
@@ -137,6 +138,7 @@ class BackendInjectsController extends BackendAppController {
 			$this->logMessage('BACKEND_INJECT', 'Inject #'.$injectid.' was just modified');
 
 			// Set a nice flash message
+			$this->Flash->success('Inject "'.$this->request->data['title'].'" sucessfully edited!');
 
 			// Redirect home
 			$this->redirect('/backend/injects');
@@ -161,6 +163,9 @@ class BackendInjectsController extends BackendAppController {
 
 		// Log it
 		$this->logMessage('BACKEND_INJECT', 'Inject #'.$injectid.' status was just toggled');
+		
+		// Set a nice flash message
+		$this->Flash->success('Inject "'.$inject['Inject']['title'].'" status was sucessfully toggled!');
 
 		$this->redirect('/backend/injects');
 	}
@@ -198,6 +203,9 @@ class BackendInjectsController extends BackendAppController {
 
 					// Log it
 					$this->logMessage('BACKEND_HINT', 'New hint was just created for Inject #'.$this->request->data['inject_id'].' Hint ID: '.$this->Hint->id);
+
+					// Set a nice flash message
+					$this->Flash->success('Hint #"'.$this->request->data['order'].'" was sucessfully created!');
 				break;
 
 				// Edit existing
@@ -218,13 +226,14 @@ class BackendInjectsController extends BackendAppController {
 
 					// Log it
 					$this->logMessage('BACKEND_HINT', 'Hint #'.$hint['Hint']['id'].' was just modified');
+
+					// Set a nice flash message
+					$this->Flash->success('Hint #"'.$hint['Hint']['order'].'" was sucessfully edited!');
 				break;
 
 				default:
 					$this->barf();
 				break;
-
-				// Give some nice message - TODO
 
 				// We done.
 			}
