@@ -8,6 +8,7 @@ class BootstrapFlashComponent extends FlashComponent {
 		if ( in_array($name, $this->_bootstrapFlashClasses) ) {
 			// Duplicating most of the parent::__call functionality
 			$options = array(
+				'element' => 'bootstrap_default',
 				'params' => array(
 					'type' => $name,
 				),
