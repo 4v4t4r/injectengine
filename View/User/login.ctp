@@ -1,9 +1,5 @@
 <h2>Please Login</h2>
 
-<?php if ( $failed_attempt ): ?>
-<div class="alert alert-danger">The username or password you entered is incorrect.</div>
-<?php endif; ?>
-
 <form method="post" class="form-horizontal">
 	<div class="form-group">
 		<label for="username" class="col-sm-2 control-label">Username</label>

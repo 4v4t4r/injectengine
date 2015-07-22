@@ -10,7 +10,6 @@ class UserController extends AppController {
 			$this->redirect('/');
 		}
 
-		$failed_attempt = false;
 		$username = null;
 
 		if ( $this->request->is('post') ) {
@@ -45,10 +44,9 @@ class UserController extends AppController {
 				$this->logMessage('AUTH', 'Attempted login for "'.htmlentities($username).'" - no such user');
 			}
 
-			$failed_attempt = true;
+			$this->Flash->danger('The username or password you entered is incorrect.');
 		}
 
-		$this->set('failed_attempt', $failed_attempt);
 		$this->set('username', $username);
 	}
 
@@ -62,6 +60,9 @@ class UserController extends AppController {
 			// Log it
 			$this->logMessage('AUTH', 'User just logged out');
 
+			// Message it
+			$this->Flash->success('Sucessfully logged out');
+
 			// Redirect home
 			$this->redirect('/');
 		}
@@ -71,9 +72,6 @@ class UserController extends AppController {
 
 	public function profile() {
 		$this->requireAuthenticated();
-
-		$saved = false;
-		$error = false;
 
 		if ( $this->request->is('post') ) {
 			// Update Password
@@ -92,14 +90,12 @@ class UserController extends AppController {
 				// Log it
 				$this->logMessage('USER', 'User just updated his/her password');
 
-				$saved = true;
+				// Message it
+				$this->Flash->success('Profile updated!');
 			} else {
-				$error = true;
+				$this->Flash->danger('You entered the wrong current password.');
 			}
 		}
-
-		$this->set('saved', $saved);
-		$this->set('error', $error);
 	}
 
 	public function emulate_clear() {
@@ -120,6 +116,9 @@ class UserController extends AppController {
 
 		// Log it
 		$this->logMessage('USER_EMULATING', $this->userinfo['username'].' finished emulating '.$emulating_user.' (UID: #'.$emulating_uid.')');
+
+		// Message it
+		$this->Flash->success('Finished emulating user account '.$emulating_user);
 
 		// Redirect home
 		$this->redirect('/');

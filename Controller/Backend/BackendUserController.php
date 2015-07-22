@@ -33,16 +33,19 @@ class BackendUserController extends BackendAppController {
 			// Verify we don't have a username conflict
 			$usernameCheck = $this->User->findByUsername($userinfo['username']);
 
-			if ( !empty($usernameCheck) ) throw new BadRequestException('Username already exists!');
+			if ( !empty($usernameCheck) ) {
+				$this->Flash->danger('ERROR: Another user already has that username!');
+			} else {
+				// Create it
+				$this->User->create();
+				$this->User->save($userinfo);
 
-			// Create it
-			$this->User->create();
-			$this->User->save($userinfo);
+				// Log it
+				$this->logMessage('BACKEND_USER', 'New user created - '.$userinfo['username']);
 
-			// Log it
-			$this->logMessage('BACKEND_USER', 'New user created - '.$userinfo['username']);
-
-			// Some happy message saying the user was created....TODO
+				// Some happy message saying the user was created
+				$this->Flash->success('User '.$userinfo['username'].' was sucessfully created!');
+			}
 		}
 
 		$this->set('teams', $this->Team->find('all'));
@@ -87,7 +90,8 @@ class BackendUserController extends BackendAppController {
 			// Set the userinfo to be the saved info we have
 			$user = array('User' => $userinfo);
 
-			// Display some message...TODO
+			// Display some message.
+			$this->Flash->success('User '.$userinfo['username'].' was sucessfully edited!');
 		}
 
 		$this->set('teams', $this->Team->find('all'));
@@ -111,6 +115,9 @@ class BackendUserController extends BackendAppController {
 
 		// Log it
 		$this->logMessage('BACKEND_USER', 'User '.$userinfo['username'].' status was just toggled');
+
+		// Message it
+		$this->Flash->success('Sucessfully toggled account status for '.$user['User']['username'].'!');
 
 		$this->redirect('/backend/user');
 	}
@@ -171,6 +178,9 @@ class BackendUserController extends BackendAppController {
 
 					// Log it
 					$this->logMessage('BACKEND_USER', 'User '.$user['User']['username'].' team was changed from TID #'.$user['User']['team_id'].' to TID #'.$this->request->data['tid']);
+
+					// Message it
+					$this->Flash->success('Changed '.$user['User']['username'].'\'s team!');
 				break;
 
 				// OP2: Create a new team
@@ -198,6 +208,9 @@ class BackendUserController extends BackendAppController {
 
 					// Log it
 					$this->logMessage('BACKEND_USER', 'New team, "'.$this->request->data['team_name'].'" was created and assigned to group GID #'.$this->request->data['gid']);
+
+					// Message it
+					$this->Flash->success('Team '.$this->request->data['team_name'].' was created!');
 				break;
 
 				// OP3: Delete a team
@@ -221,6 +234,9 @@ class BackendUserController extends BackendAppController {
 
 					// Log it
 					$this->logMessage('BACKEND_USER', 'Team '.$team['Team']['name'].' (#'.$this->request->data['id'].') was deleted');
+
+					// Message it
+					$this->Flash->success('Deleted team '.$team['Team']['name']);
 				break;
 
 				default:
@@ -265,6 +281,9 @@ class BackendUserController extends BackendAppController {
 
 					// Log it
 					$this->logMessage('BACKEND_USER', 'Team #'.$team['Team']['id'].' group was changed from GID #'.$team['Team']['group_id'].' to GID #'.$this->request->data['gid']);
+
+					// Message it
+					$this->Flash->success('Changed '.$team['Team']['name'].'\'s group membership!');
 				break;
 
 				// OP 2: Create a new group
@@ -292,6 +311,9 @@ class BackendUserController extends BackendAppController {
 
 					// Log it
 					$this->logMessage('BACKEND_USER', 'New group, "'.$this->request->data['group_name'].'" was created with backend_access of '.$this->request->data['backend_access']);
+
+					// Message it
+					$this->Flash->success('Group '.$this->request->data['group_name'].' was created!');
 				break;
 
 				// OP 3: Delete a group
@@ -312,6 +334,9 @@ class BackendUserController extends BackendAppController {
 
 					// Log it
 					$this->logMessage('BACKEND_USER', 'Group "'.$group['Group']['name'].'" (#'.$group['Group']['id'].') was deleted');
+
+					// Message it
+					$this->Flash->success('Deleted group '.$group['Group']['name']);
 				break;
 
 				default:

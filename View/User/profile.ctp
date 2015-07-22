@@ -1,13 +1,5 @@
 <h2>My Profile</h2>
 
-<?php if ( $saved ): ?>
-<div class="alert alert-success">Profile updated!</div>
-<?php endif; ?>
-
-<?php if ( $error ): ?>
-<div class="alert alert-danger">You entered the wrong current password.</div>
-<?php endif; ?>
-
 <form method="post" class="form-horizontal">
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Username</label>
