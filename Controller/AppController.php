@@ -33,10 +33,12 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	public $uses = array('Team', 'User', 'Log');
 	public $components = array(
-		'Session',
+		'DebugKit.Toolbar',
 		'Flash' => array(
 			'className' => 'BootstrapFlash',
-		));
+		),
+		'Session',
+	);
 
 	// User Information
 	protected $userinfo  = array();
@@ -76,6 +78,11 @@ class AppController extends Controller {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
+
+		// Load DebugKit (if available)
+		if ( CakePlugin::loaded('DebugKit') ) {
+			$this->Components->load('DebugKit.Toolbar');
+		}
 
 		// Get user information
 		if ( $this->Session->check('User') ) {

@@ -120,14 +120,6 @@
 			<?php echo $this->fetch('content'); ?>
 		</div>
 	</div>
-
-	<?php if ( $backend_access ): ?>
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<?php echo $this->element('sql_dump'); ?>
-		</div>
-	</div>
-	<?php endif; ?>
 </div>
 
 <footer class="footer">

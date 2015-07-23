@@ -75,6 +75,7 @@ App::build(array(
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
+CakePlugin::loadAll();
 
 /**
  * To prefer app translation over plugin translation, you can set

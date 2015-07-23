@@ -8,6 +8,7 @@
 ############
 composer.lock
 Plugin/CakephpMonolog
+Plugin/DebugKit
 
 # IDE and editor specific files #
 #################################
