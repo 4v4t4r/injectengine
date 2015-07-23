@@ -209,29 +209,37 @@ class AppSchema extends CakeSchema {
 			'null' => false,
 			'key' => 'primary',
 		),
-		'type' => array(
-			'type' => 'string',
-			'null' => false,
-		),
-		'text' => array(
-			'type' => 'string',
-			'null' => false,
-		),
 		'time' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false,
 		),
-		'ip_address' => array(
-			'type' => 'string',
-			'length' => 15,
+		'type' => array(
+			'type' => 'integer',
+			'langth' => 10,
+			'null' => false,
 		),
 		'user_id' => array(
 			'type' => 'integer',
 		),
-
+		'related_id' => array(
+			'type' => 'integer',
+		),
+		'extra_data' => array(
+			'type' => 'text',
+		),
+		'ip' => array(
+			'type' => 'string',
+			'length' => 15,
+		),
+		'message' => array(
+			'type' => 'text',
+			'null' => false,
+		),
+		
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'idx_type' => array('column' => 'type'),
 		)
 	);
 
@@ -409,11 +417,13 @@ class AppSchema extends CakeSchema {
 
 			case 'logs':
 				$this->_create('Log', array(
-					'type'       => 'INSTALLATION',
-					'text'       => 'InjectEngine was just installed.',
 					'time'       => time(),
-					'ip_address' => '127.0.0.1',
+					'type'       => 1,
 					'user_id'    => 1,
+					'related_id' => 0,
+					'extra_data' => json_encode(array()),
+					'ip'         => '127.0.0.1',
+					'message'    => 'InjectEngine was just installed.',
 				));
 			break;
 		}

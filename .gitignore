@@ -1,14 +1,14 @@
 # User specific & automatically generated files #
 #################################################
-/Config/database.php
+/app/Config/.env
+/app/Config/database.php
 /tmp
-/Vendor
+/vendor
+/Plugin
 
 # Composer #
 ############
 composer.lock
-Plugin/CakephpMonolog
-Plugin/DebugKit
 
 # IDE and editor specific files #
 #################################

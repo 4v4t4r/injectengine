@@ -17,8 +17,5 @@
 	},
 	"require-dev": {
 		"cakephp/debug_kit": "~2.2"
-	},
-	"config": {
-		"vendor-dir": "Vendor/"
 	}
 }

@@ -51,6 +51,19 @@ Cache::config('default', array('engine' => 'File'));
  *
  */
 App::build(array(
+		'Plugin' => array(
+			ROOT . DS . 'Plugin' . DS,
+			ROOT . DS . APP_DIR . DS . 'Plugin' . DS,
+		),
+		'Vendor' => array(
+			ROOT . DS . 'vendor' . DS,
+			ROOT . DS . APP_DIR . DS . 'Vendor' . DS,
+		),
+	),
+	App::RESET
+);
+
+App::build(array(
 	'Controller' => array(
 		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS,
 		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Backend' . DS,
@@ -121,7 +134,7 @@ CakeLog::config('error', array(
 ));
 
 // Load Composer autoload.
-require APP . 'Vendor/autoload.php';
+require ROOT . DS . 'vendor' . DS . 'autoload.php';
 
 // Remove and re-prepend CakePHP's autoloader as Composer thinks it is the
 // most important.
