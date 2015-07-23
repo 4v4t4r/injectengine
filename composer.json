@@ -3,7 +3,7 @@
 	"require": {
 		"cakephp/cakephp": "~2.7",
 		"wyrihaximus/html-compress": "~1.0",
-		"monolog/monolog": "~1.15"
+		"jadb/cakephp-monolog": "^2.0"
 	},
 	"config": {
 		"vendor-dir": "Vendor/"
