@@ -2,7 +2,7 @@
 App::uses('AppController', 'Controller');
 
 class InjectsController extends AppController {
-	public $uses = array('Team', 'User', 'Hint', 'Inject', 'CompletedInject', 'RequestedCheck', 'UsedHint', 'Group', 'Help');
+	public $uses = array('Team', 'User', 'Hint', 'Inject', 'CompletedInject', 'RequestedCheck', 'UsedHint', 'Group', 'Help', 'Attachment');
 	public $helpers = array('Inject');
 
 	public function beforeFilter() {
@@ -196,7 +196,42 @@ class InjectsController extends AppController {
 			break;
 
 			case 2:
-				return $this->ajaxResponse('Soon...');
+				$contents = file_get_contents($_FILES['response']['tmp_name']);
+
+				$finfo = new finfo(FILEINFO_MIME);
+				$mime  = $finfo->buffer($contents);
+
+				// pdf's ONLY!
+				if ( $mime != 'application/pdf; charset=binary' ) {
+					$this->Flash->danger('You can only upload .pdf\'s!');
+
+					$this->redirect('/injects');
+				}
+
+				// Upload attachment
+				$this->Attachment->create();
+				$this->Attachment->save(array(
+					'inject_id' => $this->request->data['id'],
+					'team_id'   => $this->teaminfo['id'],
+					'time'      => time(),
+					'data'      => $contents,
+					'mime'      => $mime,
+					'filename'  => $_FILES['response']['name'],
+				));
+
+				// They solved it...
+				$this->CompletedInject->create();
+				$this->CompletedInject->save(array(
+					'inject_id' => $this->request->data['id'],
+					'user_id'   => $this->userinfo['id'],
+					'team_id'   => $this->teaminfo['id'],
+					'time'      => time(),
+				));
+
+				// Set a nice flash message
+				$this->Flash->success('Thank you for your response to inject "'.$inject['Inject']['title'].'"!');
+
+				$this->redirect('/injects');
 			break;
 
 			case 3:

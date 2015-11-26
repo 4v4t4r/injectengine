@@ -141,7 +141,7 @@ class DashboardController extends AppController {
 			}
 
 			// Log it
-			$this->logMessage('INJECT_CHECK', $this->userinfo['username'].' checked '.$check['Team']['name'].'\'s submission for Inject "'.$check['Inject']['title'].'"')
+			$this->logMessage('INJECT_CHECK', $this->userinfo['username'].' checked '.$check['Team']['name'].'\'s submission for Inject "'.$check['Inject']['title'].'"');
 
 			// Set a flash message
 			$this->Flash->success('Sucessfully performed check on TID #'.$check['Team']['name']);

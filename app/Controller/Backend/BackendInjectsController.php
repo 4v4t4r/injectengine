@@ -2,7 +2,7 @@
 App::uses('BackendAppController', 'Controller');
 
 class BackendInjectsController extends BackendAppController {
-	public $uses = array('Team', 'User', 'Hint', 'Inject', 'CompletedInject', 'RequestedCheck', 'UsedHint', 'Group', 'Help');
+	public $uses = array('Team', 'User', 'Hint', 'Inject', 'CompletedInject', 'RequestedCheck', 'UsedHint', 'Group', 'Help', 'Attachment');
 
 	public function index() {
 		$this->Inject->bindModel(array(
@@ -250,8 +250,30 @@ class BackendInjectsController extends BackendAppController {
 		)));
 	}
 
-	public function responses() {
-		// TODO
+	public function responses($id=false) {
+		$this->Attachment->bindModel(array(
+			'belongsTo' => array(
+				'Inject',
+				'Team',
+			),
+		));
+
+		if ( $id !== false ) {
+			$attachment = $this->Attachment->findById($id);
+
+			if ( empty($id) ) $this->barf();
+
+			header('Content-Type: '.$attachment['Attachment']['mime']);
+			header('Content-Disposition: attachment; filename="UBCSC_FA15-T'.$attachment['Team']['id'].'-INJECT'.$attachment['Inject']['id'].'.pdf"');
+
+			echo $attachment['Attachment']['data'];
+
+			die;
+		}
+
+		$this->set('data', $this->Attachment->find('all', array(
+			'fields' => array('Attachment.id', 'Attachment.time', 'Attachment.filename', 'Attachment.mime', 'Inject.*', 'Team.*'),
+		)));
 	}
 
 	public function getHintInfo($id=false) {

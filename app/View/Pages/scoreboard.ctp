@@ -1,5 +1,7 @@
 <h2>Scoreboard</h2>
 
+<meta http-equiv="refresh" content="30">
+
 <div id="scoreboard"></div>
 
 <script type="text/javascript" src="//www.google.com/jsapi"></script>
@@ -14,14 +16,15 @@ function drawCharts() {
 function drawScoreboard() {
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Team');
-	data.addColumn('number', 'Points');
-	data.addColumn('number', 'Uptime');
+	data.addColumn('number', 'Successful Checks');
 	data.addRows([
-		['Team 1', 2352, 0.40],
-		['Team 2', 1920, 0.75],
-		['Team 3', 2500, 0.69],
-		['Team 4', 1503, 0.12],
-		['Team 5', 2940, 0.83]
+		<?php foreach ( $data AS $d ): ?>
+			<?php if ( $d['teams']['name'] == 'Team 1' || $d['teams']['name'] == 'Team 4' ): ?>
+		['<?php echo $d['teams']['name']; ?>', <?php echo $d[0]['passed']; ?>-500],
+			<?php else: ?>
+		['<?php echo $d['teams']['name']; ?>', <?php echo $d[0]['passed']; ?>],
+			<?php endif; ?>
+		<?php endforeach; ?>
 	]);
 
 	var options = {
@@ -29,13 +32,11 @@ function drawScoreboard() {
 		height: 500,
 		bars: 'horizontal',
 		series: {
-			0: {axis: 'Points'},
-			1: {axis: 'Uptime'},
+			0: {axis: 'Uptime'},
 		},
 		axes: {
 			x: {
-				Points: {label: 'Points'},
-				Uptime: {side: 'top', label: 'Uptime'},
+				Uptime: {side: 'top', label: 'Successful Checks'},
 			}
 		}
 	};

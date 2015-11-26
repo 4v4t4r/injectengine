@@ -10,17 +10,29 @@ class AppSchema extends CakeSchema {
 			'null' => false,
 			'key' => 'primary',
 		),
+		'team_id' => array(
+			'type' => 'integer',
+			'null' => false,
+		),
 		'inject_id' => array(
 			'type' => 'integer',
 			'null' => false,
 		),
-		'data' => array(
-			'type' => 'binary',
+		'time' => array(
+			'type' => 'integer',
+			'length' => 10,
 			'null' => false,
 		),
-		'active' => array(
-			'type' => 'boolean',
-			'default' => true,
+		'filename' => array(
+			'type' => 'string',
+			'null' => false,
+		),
+		'mime' => array(
+			'type' => 'string',
+			'null' => false,
+		),
+		'data' => array(
+			'type' => 'binary',
 			'null' => false,
 		),
 
@@ -393,7 +405,7 @@ class AppSchema extends CakeSchema {
 				$this->_create('Group', array(
 					'name'              => 'Blue Teams',
 					'backend_access'    => 0,
-					'dashboard_access'  => 9,
+					'dashboard_access'  => 0,
 					'teamportal_access' => 1,
 				));
 			break;
@@ -425,6 +437,13 @@ class AppSchema extends CakeSchema {
 					'ip'         => '127.0.0.1',
 					'message'    => 'InjectEngine was just installed.',
 				));
+			break;
+
+			case 'attachments':
+				// We have to change BLOB -> MEDIUMBLOB
+				$table = ClassRegistry::init('attachments');
+
+				$table->query('ALTER TABLE attachments MODIFY data MEDIUMBLOB');
 			break;
 		}
 	}

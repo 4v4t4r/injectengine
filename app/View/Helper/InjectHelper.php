@@ -51,7 +51,7 @@ class InjectHelper extends AppHelper {
 
 		// Has it started?
 		if ( !$this->started($inject) ) {
-			debug($inject);
+			//debug($inject);
 			return false;
 		}
 

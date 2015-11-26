@@ -3,36 +3,38 @@
 
 <?php echo $this->element('navbars/backend_injects', array('at_responses' => true)); ?>
 
+<meta http-equiv="refresh" content="30">
+
 <p>&nbsp;</p>
 
-<table class="table table-vertalign">
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<td>Inject ID</td>
 			<td>Team</td>
 			<td>Submitted</td>
-			<td>Status</td>
+			<td>Filename</td>
 			<td>Actions</td>
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ( array() AS $inject ): ?>
+	<?php foreach ( $data AS $inject ): ?>
 	<tr>
 		<td><?php echo $inject['Inject']['title']; ?></td>
-		<td><?php echo $inject['Inject']['type_name']; ?></td>
+		<td><?php echo $inject['Team']['name']; ?></td>
 		<td>
-			<?php echo ($inject['Inject']['time_start'] > 0) ? date('m/d/Y \a\t g:iA', $inject['Inject']['time_start']) : 'Immediately'; ?>
+			<?php echo date('m/d/Y \a\t g:iA', $inject['Attachment']['time']); ?>
 		</td>
 		<td>
-			<?php echo ($inject['Inject']['time_end'] > 0) ? date('m/d/Y \a\t g:iA', $inject['Inject']['time_end']) : 'Immediately'; ?>
+			<?php echo $inject['Attachment']['filename']; ?>
 		</td>
-		<td class="text-center">
-			<p><?php echo $this->Html->link('View', '/backend/injects/response_view/'.$inject['Inject']['id'], array('class' => array('btn btn-xs btn-primary'))); ?></p>
+		<td>
+			<p><?php echo $this->Html->link('View', '/backend/injects/responses/'.$inject['Attachment']['id'], array('class' => array('btn btn-xs btn-primary'))); ?></p>
 		</td>
 	</tr>
 	<?php endforeach; ?>
 	
-	<?php if ( empty(array()) ): ?>
+	<?php if ( empty($data) ): ?>
 	<tr>
 		<td colspan="5">
 			<p>There are no responses yet.</p>
