@@ -19,11 +19,7 @@ function drawScoreboard() {
 	data.addColumn('number', 'Successful Checks');
 	data.addRows([
 		<?php foreach ( $data AS $d ): ?>
-			<?php if ( $d['teams']['name'] == 'Team 1' || $d['teams']['name'] == 'Team 4' ): ?>
-		['<?php echo $d['teams']['name']; ?>', <?php echo $d[0]['passed']; ?>-500],
-			<?php else: ?>
 		['<?php echo $d['teams']['name']; ?>', <?php echo $d[0]['passed']; ?>],
-			<?php endif; ?>
 		<?php endforeach; ?>
 	]);
 
