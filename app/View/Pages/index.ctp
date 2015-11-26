@@ -1,3 +1,3 @@
-<h2>Welcome to the 5th UB Cyber Security Competition!</h2>
+<h2>Welcome!</h2>
 
-<p>This website will be used to retrieve communication from the White Team/CEO.</p>
+<p>Welcome to the Inject Engine for <?php echo $competition_name; ?>! You can modify this message by editing the file <code>/View/Pages/index.ctp</code></p>

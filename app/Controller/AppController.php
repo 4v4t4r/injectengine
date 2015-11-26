@@ -33,7 +33,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	public $uses = array('Team', 'User', 'Log');
 	public $components = array(
-		//'DebugKit.Toolbar',
+		'DebugKit.Toolbar',
 		'Flash' => array(
 			'className' => 'BootstrapFlash',
 		),
@@ -81,7 +81,7 @@ class AppController extends Controller {
 
 		// Load DebugKit (if available)
 		if ( CakePlugin::loaded('DebugKit') ) {
-			//$this->Components->load('DebugKit.Toolbar');
+			$this->Components->load('DebugKit.Toolbar');
 		}
 
 		// Get user information
@@ -103,13 +103,11 @@ class AppController extends Controller {
 		$this->teampanel_access = $this->getPermission('teampanel_access');
 
 		// Git version (because it looks cool)
-		//exec('git describe --tags --always', $mini_hash);
-		//exec('git log -1', $line);
+		exec('git describe --tags --always', $mini_hash);
+		exec('git log -1', $line);
 
-		//$this->set('version', trim($mini_hash[0]));
-		//$this->set('version_long', str_replace('commit ','', $line[0]));
-		$this->set('version', 'ub-csc-custom');
-		$this->set('version_long', 'csc-fa15');
+		$this->set('version', trim($mini_hash[0]));
+		$this->set('version_long', str_replace('commit ','', $line[0]));
 
 		// Set template information
 		$this->set('userinfo', $this->userinfo);
